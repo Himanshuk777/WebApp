@@ -1,0 +1,1976 @@
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Catalyzers Academy</title>
+
+    <!-- PWA & MOBILE LOGIC -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#f0f4f8" id="status-bar-color">
+    
+    <!-- PWA Manifest (Embedded) -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Catalyzers Academy","short_name":"Catalyzers","start_url":".","display":"standalone","background_color":"#f0f4f8","theme_color":"#5D2EC0","icons":[{"src":"https://i.ibb.co/fGdzQpfg/file-000000002f9471fabcdfdb0bc2f7d04e.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
+    <link rel="apple-touch-icon" href="https://i.ibb.co/fGdzQpfg/file-000000002f9471fabcdfdb0bc2f7d04e.png">
+
+    <!-- Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons: Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans:['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        brand: { purple: '#5D2EC0', orange: '#FFB800', dark: '#0A0A0A' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+            * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
+        /* ── THEME TRANSITIONS & BACKGROUNDS ───────────────────────────── */
+        html { transition: background-color 0.4s ease; }
+        
+        body {
+            width: 100%; height: 100%; min-height: 100dvh; overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f0f4f8; 
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(93, 46, 192, 0.05), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.05), transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(93, 46, 192, 0.05), transparent 50%);
+            -webkit-tap-highlight-color: transparent;
+            padding-top: env(safe-area-inset-top);
+        }
+
+        html.dark body {
+            background-color: #050505; 
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(93, 46, 192, 0.25), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(255, 184, 0, 0.15), transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(93, 46, 192, 0.15), transparent 50%);
+        }
+
+        ::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── LIQUID GLASS MIXIN ──────────── */
+        .glass {
+            position: relative;
+            backdrop-filter: blur(24px) saturate(1.8);
+            -webkit-backdrop-filter: blur(24px) saturate(1.8);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: background 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+        }
+
+        html.dark .glass {
+            background: rgba(25, 25, 30, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(160deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+            pointer-events: none; z-index: 1;
+        }
+        html.dark .glass::before { background: linear-gradient(160deg, rgba(255,255,255,0.1) 0%, transparent 50%); }
+
+        /* ── TAB BAR ───────────────────── */
+        .tab-bar {
+            backdrop-filter: blur(40px) saturate(2);
+            -webkit-backdrop-filter: blur(40px) saturate(2);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        html.dark .tab-bar {
+            background: rgba(15, 15, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-item { transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+        .tab-item.active { background: rgba(0,0,0,0.05); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+        html.dark .tab-item.active { background: rgba(255,255,255,0.1); box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+        .tab-item.active i { color: #5D2EC0; transform: scale(1.15); }
+        html.dark .tab-item.active i { color: #FFB800; }
+        .tab-item.active span { font-weight: 700; color: #111; }
+        html.dark .tab-item.active span { color: #fff; }
+
+        /* ── BUTTONS ──────────────────────────── */
+        .glass-btn {
+            backdrop-filter: blur(20px) saturate(1.6);
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s;
+            position: relative; overflow: hidden; z-index: 10;
+        }
+        html.dark .glass-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .glass-btn:active { transform: scale(0.95); }
+
+        .btn-primary-adaptive { background: #2563EB !important; border-color: #3B82F6 !important; color: white !important; }
+        html.dark .btn-primary-adaptive { background: #5D2EC0 !important; border-color: #a855f7 !important; color: white !important; }
+
+        /* ── ANIMATIONS ──────────────────────────────── */
+        .view-section { display: none; width: 100%; height: 100%; position: absolute; top:0; left:0;}
+        .view-section.active { display: block; z-index: 10; animation: superSmooth 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;}
+        .view-section.flex-col.active { display: flex; } 
+        
+        @keyframes superSmooth {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); filter: blur(2px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+        }
+
+        @keyframes smoothFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        .animate-float { animation: smoothFloat 4s ease-in-out infinite; }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 4px rgba(255,184,0,0.4));}
+            50% { transform: scale(1.1); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(255,184,0,0.8));}
+        }
+        .animate-breathe { animation: breathe 3s infinite ease-in-out; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .animate-fade-in { animation: fadeIn 1.5s ease forwards; }
+
+        /* ── INPUT STYLES ──────────────────────────────── */
+        .student-input {
+            width: 100%; border-radius: 12px; padding: 14px 16px; font-size: 14px;
+            outline: none; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); color: #111; font-weight: 600;
+        }
+        html.dark .student-input { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); color: #fff; }
+        
+        .student-input:focus:not([readonly]):not(:disabled) { border-color: #2563EB; box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+        html.dark .student-input:focus:not([readonly]):not(:disabled) { border-color: #5D2EC0; box-shadow: 0 0 0 2px rgba(93,46,192,0.2); }
+
+        .student-input[readonly], button.student-input:disabled {
+            background: transparent !important; border-color: transparent !important;
+            padding: 4px 0 !important; box-shadow: none !important; opacity: 0.9; cursor: default;
+        }
+
+        /* Task Modal Specific Colors */
+        .task-label { color: #2563EB; font-weight: 800; font-size: 11px; text-transform: uppercase; margin-left: 4px; margin-bottom: 2px; display: block; }
+        html.dark .task-label { color: #FFB800; }
+        .task-input { background: rgba(37, 99, 235, 0.08) !important; color: #1e3a8a !important; border: 1px solid rgba(37, 99, 235, 0.2) !important; }
+        html.dark .task-input { background: rgba(255, 184, 0, 0.1) !important; color: #fff !important; border: 1px solid rgba(255, 184, 0, 0.2) !important; }
+    </style>
+</head>
+<body class="flex items-center justify-center font-sans h-[100dvh] w-screen selection:bg-blue-500/30 dark:selection:bg-brand-purple/30">
+
+    <!-- Firebase Connection Initialization -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getDatabase, ref, get, set, update, remove, push } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9tZvNcuMGvijxd3UU55SwIAUn339cmZU",
+            authDomain: "catalyzersacademy-edd52.firebaseapp.com",
+            projectId: "catalyzersacademy-edd52",
+            storageBucket: "catalyzersacademy-edd52.firebasestorage.app",
+            messagingSenderId: "895348032961",
+            appId: "1:90626658651:web:ed6cbc33e51ba746f28a7e"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            window.fb = { ref, get, set, update, remove, push, db };
+            window.dispatchEvent(new Event('firebaseReady'));
+        } catch(e) { console.error("Firebase init failed", e); }
+    </script>
+
+    <div class="relative z-10 w-full h-full sm:w-[400px] sm:h-[800px] sm:rounded-[40px] sm:border sm:border-gray-300 dark:sm:border-white/10 shadow-2xl overflow-hidden flex flex-col bg-transparent">
+        
+        <!-- MAIN HEADER -->
+        <header id="main-header" style="display: none;" class="px-6 flex justify-between items-center relative z-20 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] transform origin-top overflow-hidden opacity-100 pt-12 pb-4 translate-y-0 max-h-[150px]">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white drop-shadow-lg flex items-center gap-2">
+                    <img src="https://i.ibb.co/fGdzQpfg/file-000000002f9471fabcdfdb0bc2f7d04e.png" class="w-7 h-7 rounded-lg object-cover">
+                    <span id="header-title" style="font-size: 18px;">Catalyzers Academy</span>
+                </h1>
+                <p id="header-subtitle" class="text-xs text-blue-600 dark:text-brand-orange/80 font-medium tracking-wider uppercase mt-1">Smart Learning</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="toggleTheme()" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center">
+                    <i id="themeIcon" class="ph-fill ph-desktop text-xl text-gray-700 dark:text-white"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 relative z-10 overflow-hidden w-full h-full" id="app-container">
+            
+            <!-- 0. SPLASH SCREEN -->
+            <div id="view-splash" class="view-section active flex-col items-center justify-center">
+                <div class="w-32 h-32 flex items-center justify-center rounded-[32px] mb-6 animate-float overflow-hidden">
+                    <img src="https://i.ibb.co/fGdzQpfg/file-000000002f9471fabcdfdb0bc2f7d04e.png" class="w-full h-full object-cover rounded-[32px] shadow-2xl">
+                </div>
+                <h1 class="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight drop-shadow-lg animate-fade-in text-center px-4">Catalyzers Academy</h1>
+                <p class="text-gray-500 dark:text-gray-400 uppercase tracking-widest text-xs mt-2 font-bold animate-fade-in">Smart Learning</p>
+            </div>
+
+            <!-- 0.5 HIGHLIGHTS SCROLLING -->
+            <div id="view-highlights" class="view-section bg-transparent">
+                <div id="highlight-slider" class="flex h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar">
+                    <div class="w-full h-full flex-shrink-0 snap-center flex flex-col items-center justify-center p-8 text-center pb-32">
+                        <div class="w-64 h-64 mb-8 bg-blue-500/10 dark:bg-brand-purple/20 rounded-full flex items-center justify-center relative shadow-inner">
+                            <i class="ph-fill ph-student text-[100px] text-blue-500 dark:text-brand-purple absolute animate-float"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Learn Smart</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed px-4">Experience a modern platform designed to elevate your educational journey to the next level.</p>
+                    </div>
+                    <div class="w-full h-full flex-shrink-0 snap-center flex flex-col items-center justify-center p-8 text-center pb-32">
+                        <div class="w-64 h-64 mb-8 bg-orange-500/10 dark:bg-brand-orange/20 rounded-full flex items-center justify-center relative shadow-inner">
+                            <i class="ph-fill ph-chart-line-up text-[100px] text-orange-500 dark:text-brand-orange absolute animate-float"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Track Progress</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed px-4">Effortlessly monitor your daily attendance, upcoming fees, and test scores in real time.</p>
+                    </div>
+                    <div class="w-full h-full flex-shrink-0 snap-center flex flex-col items-center justify-center p-8 text-center pb-32">
+                        <div class="w-64 h-64 mb-8 bg-green-500/10 dark:bg-blue-500/20 rounded-full flex items-center justify-center relative shadow-inner">
+                            <i class="ph-fill ph-robot text-[100px] text-green-500 dark:text-blue-500 absolute animate-float"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">AI Assistant</h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed px-4">Have questions? The integrated Catalyzer AI is available 24/7 to resolve your doubts instantly.</p>
+                    </div>
+                </div>
+                <div class="absolute bottom-12 left-0 w-full flex justify-center px-8 z-20">
+                    <button id="btn-slider-action" onclick="handleSliderAction()" class="w-full btn-primary-adaptive glass-btn py-4 rounded-2xl text-lg font-bold shadow-xl">Continue</button>
+                </div>
+            </div>
+
+            <!-- 1. AUTH SCREEN -->
+            <div id="view-auth" class="view-section overflow-y-auto px-6 pt-16 pb-12">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-600/10 dark:bg-brand-purple/10 flex items-center justify-center mx-auto mb-4 border border-blue-600/20 dark:border-brand-purple/20 overflow-hidden">
+                        <img src="https://i.ibb.co/fGdzQpfg/file-000000002f9471fabcdfdb0bc2f7d04e.png" class="w-10 h-10 rounded-lg object-cover">
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Authenticate to access your portal</p>
+                </div>
+
+                <div class="flex justify-center mb-8">
+                    <div class="bg-gray-200 dark:bg-white/5 rounded-full p-1 flex w-full max-w-[250px]">
+                        <button id="tab-login" onclick="toggleAuthMode('login')" class="flex-1 py-2 text-sm font-bold rounded-full bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow transition-all">Login</button>
+                        <button id="tab-signup" onclick="toggleAuthMode('signup')" class="flex-1 py-2 text-sm font-bold rounded-full text-gray-500 transition-all">Sign Up</button>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="form-login" class="space-y-4" onsubmit="doLogin(event)">
+                    <input type="tel" id="log-phone" class="student-input" placeholder="Phone Number" required>
+                    <input type="password" id="log-pass" class="student-input" placeholder="Password" required>
+                    <div class="text-right">
+                        <a href="https://wa.me/919752255335?text=I%20forgot%20my%20password.%20Please%20help." target="_blank" class="text-xs font-bold text-blue-600 dark:text-brand-orange hover:underline">Forget Password?</a>
+                    </div>
+                    <button type="submit" id="btn-login" class="w-full glass-btn btn-primary-adaptive py-3.5 rounded-xl font-bold mt-4">Login Securely</button>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="form-signup" class="space-y-3 hidden pb-10" onsubmit="doSignup(event)">
+                    <div class="flex justify-center mb-4">
+                        <div class="relative w-20 h-20 rounded-full bg-gray-200 dark:bg-white/10 cursor-pointer overflow-hidden border-2 border-blue-600/50 dark:border-brand-purple/50 shadow-md" onclick="openAvatarModal(true)">
+                            <img id="su-avatar-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Default" class="w-full h-full object-cover relative z-10">
+                            <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white text-[10px] text-center py-0.5 font-bold uppercase tracking-widest backdrop-blur-sm z-20">Edit</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="su-fname" class="student-input" placeholder="First Name" required>
+                        <input type="text" id="su-lname" class="student-input" placeholder="Surname" required>
+                    </div>
+                    <input type="tel" id="su-phone" class="student-input" placeholder="Phone Number" required>
+                    <input type="text" id="su-father" class="student-input" placeholder="Father's Name" required>
+                    <input type="text" id="su-location" class="student-input" placeholder="Location (Village/City)" required>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="su-grade-btn" onclick="openGradePicker('su-grade-btn')" class="student-input text-left text-gray-500 overflow-hidden whitespace-nowrap">Grade (e.g. 10)</button>
+                        <button type="button" id="su-batch-btn" onclick="openBatchSelection()" class="student-input text-left text-gray-500 overflow-hidden whitespace-nowrap">Choose Batch</button>
+                    </div>
+                    <input type="password" id="su-pass" class="student-input" placeholder="Password (Min. 8 char)" required>
+                    <input type="password" id="su-conf-pass" class="student-input" placeholder="Confirm Password" required>
+                    <button type="submit" id="btn-signup" class="w-full glass-btn btn-primary-adaptive py-3.5 rounded-xl font-bold mt-4">Create Account</button>
+                </form>
+            </div>
+            
+            <!-- 2. HOME DASHBOARD -->
+            <div id="view-home" class="view-section overflow-y-auto px-6 pb-32 space-y-6 pt-2">
+                <!-- Notice Board -->
+                <div class="glass p-5 relative">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-8 h-8 rounded-full bg-orange-500/20 dark:bg-brand-orange/20 flex items-center justify-center text-orange-500 dark:text-brand-orange relative z-10">
+                            <i class="ph-fill ph-megaphone text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 dark:text-white relative z-10">Notice Board</h3>
+                        <button id="btn-edit-notice" onclick="editNotice()" class="hidden ml-2 w-7 h-7 bg-gray-200 dark:bg-white/10 rounded-full flex items-center justify-center text-gray-700 dark:text-white z-10 transition-transform active:scale-90"><i class="ph-bold ph-pencil-simple text-xs"></i></button>
+                        <span class="ml-auto text-[10px] bg-red-500/10 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-full border border-red-500/30 animate-pulse font-bold relative z-10">Live</span>
+                    </div>
+                    <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed relative z-10 font-medium whitespace-pre-line" id="home-notice">Fetching latest notices...</p>
+                </div>
+
+                <!-- Grid Features -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-4 flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-transform active:scale-95" onclick="switchFullScreen('attendance')">
+                        <div class="w-12 h-12 rounded-2xl bg-green-500/10 text-green-600 dark:text-green-400 flex items-center justify-center text-2xl border border-green-500/20 relative z-10">
+                            <i class="ph-fill ph-calendar-check"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-sm font-bold text-gray-900 dark:text-white">Attendance</h4>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-0.5">View Calendar</p>
+                        </div>
+                    </div>
+                    <div class="glass p-4 flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-transform active:scale-95" onclick="switchFullScreen('fees')">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-brand-orange flex items-center justify-center text-2xl border border-orange-500/20 relative z-10">
+                            <i class="ph-fill ph-wallet"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-sm font-bold text-gray-900 dark:text-white">Fees</h4>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-0.5">View Status</p>
+                        </div>
+                    </div>
+                    <div class="glass p-4 flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-transform active:scale-95" onclick="switchFullScreen('tests')">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl border border-blue-500/20 relative z-10">
+                            <i class="ph-fill ph-exam"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-sm font-bold text-gray-900 dark:text-white">Tests</h4>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-0.5">Upcoming</p>
+                        </div>
+                    </div>
+                    <div class="glass p-4 flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-transform active:scale-95" onclick="switchFullScreen('homework')">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl border border-purple-500/20 relative z-10">
+                            <i class="ph-fill ph-notebook"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="text-sm font-bold text-gray-900 dark:text-white">Homework</h4>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-0.5">Assigned Tasks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. STUDENTS VIEW -->
+            <div id="view-students" class="view-section overflow-y-auto px-6 pt-12 pb-32 space-y-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 pl-1">Students</h2>
+                <div class="glass flex items-center px-4 py-3">
+                    <i class="ph ph-magnifying-glass text-gray-500 text-lg mr-3 relative z-10"></i>
+                    <input type="text" id="student-search-input" oninput="handleStudentSearch()" placeholder="Search by name, grade, or batch..." class="bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 flex-1 text-sm font-medium relative z-10">
+                </div>
+                <div id="student-list-container" class="flex flex-col gap-4 pb-10"></div>
+            </div>
+
+            <!-- 4. BATCHES VIEW -->
+            <div id="view-batches" class="view-section overflow-y-auto px-6 pt-12 pb-32 space-y-4">
+                <div class="flex justify-between items-center mb-4 pl-1">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Active Batches</h2>
+                    <button id="btn-add-batch" onclick="openBatchEditModal()" class="hidden w-10 h-10 rounded-full btn-primary-adaptive text-white flex items-center justify-center shadow-md active:scale-90 transition-transform"><i class="ph-bold ph-plus text-lg"></i></button>
+                </div>
+                <div id="batches-list-container" class="space-y-4 pb-10"></div>
+            </div>
+
+            <!-- 5. Catalyzer AIBOT VIEW -->
+            <div id="view-chat" class="view-section flex-col px-6 pt-12 pb-6">
+                <div class="glass flex items-center justify-between p-3 mb-4 shrink-0 relative z-10">
+                    <button onclick="switchTab('home')" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-white bg-gray-200/50 dark:bg-white/10 active:scale-90 transition-transform"><i class="ph-bold ph-arrow-left text-lg"></i></button>
+                    <div class="flex items-center gap-2 absolute left-1/2 transform -translate-x-1/2">
+                        <i class="ph-fill ph-robot text-blue-600 dark:text-brand-orange text-2xl animate-breathe"></i>
+                        <span class="font-bold text-gray-900 dark:text-white tracking-wide">Catalyzer AI</span>
+                    </div>
+                    <div class="w-10"></div>
+                </div>
+                
+                <div class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1" id="chat-messages">
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 rounded-full bg-blue-600/10 dark:bg-brand-purple/20 flex-shrink-0 flex items-center justify-center mt-1">
+                            <i class="ph-fill ph-robot text-blue-600 dark:text-purple-300"></i>
+                        </div>
+                        <div class="glass p-3 rounded-tl-none text-sm text-gray-800 dark:text-gray-200 font-medium"><span class="relative z-10">Hello! I am your Catalyzer AI. How can I help you today?</span></div>
+                    </div>
+                </div>
+
+                <form id="chat-form" class="glass shrink-0 p-1.5 pl-4 flex items-center gap-2">
+                    <input type="text" id="chat-input" class="bg-transparent border-none outline-none text-gray-900 dark:text-white text-sm flex-1 font-medium relative z-10" placeholder="Ask a question..." required>
+                    <button type="submit" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 relative z-10 text-blue-600 dark:text-white bg-white dark:bg-transparent shadow-sm"><i class="ph-fill ph-paper-plane-right text-lg"></i></button>
+                </form>
+            </div>
+
+            <!-- 6. PROFILE VIEW -->
+            <div id="view-profile" class="view-section overflow-y-auto px-6 pt-12 pb-32 space-y-6">
+                <div class="glass p-5 flex items-center gap-4 relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-blue-500 to-orange-400 dark:from-brand-purple dark:to-brand-orange p-1 relative z-10 shrink-0 cursor-pointer shadow-lg active:scale-95 transition-transform" onclick="openAvatarModal(false)">
+                        <img id="profile-avatar-img" src="" class="w-full h-full rounded-full bg-white dark:bg-black object-cover">
+                        <div class="absolute bottom-0 right-0 bg-blue-600 dark:bg-brand-orange text-white rounded-full p-1.5 shadow-xl border-2 border-[#f0f4f8] dark:border-[#050505] z-20 flex items-center justify-center transform translate-x-1/4 translate-y-1/4"><i class="ph-bold ph-pencil-simple text-[10px]"></i></div>
+                    </div>
+                    <div class="relative z-10">
+                        <h2 id="logged-user-name" class="text-xl font-extrabold text-gray-900 dark:text-white leading-tight">Name</h2>
+                        <div class="flex items-center gap-2 mt-1">
+                            <p id="logged-user-role" class="text-[10px] text-blue-600 dark:text-brand-orange tracking-widest uppercase font-bold bg-blue-600/10 dark:bg-brand-orange/10 inline-block px-2 py-0.5 rounded-md">Role</p>
+                            <p id="logged-user-grade-card" class="text-[10px] text-gray-700 dark:text-white tracking-widest uppercase font-extrabold bg-white/50 dark:bg-white/10 inline-block px-2 py-0.5 rounded-md border border-white/20">Grade 10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass flex flex-col relative z-10">
+                    <button onclick="openNameChangeModal()" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 rounded-t-2xl transition-colors"><i class="ph-fill ph-user-circle text-xl text-blue-600 dark:text-brand-orange"></i> Change Name</button>
+                    <button id="btn-admin-teachers-panel" onclick="openAdminTeacherList()" class="hidden flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-users-four text-xl text-blue-600 dark:text-brand-orange"></i> Teachers</button>
+                    <button id="btn-change-grade-profile" onclick="openGradePicker('btn-change-grade-profile')" class="hidden flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-identification-card text-xl text-blue-600 dark:text-brand-orange"></i> Change the Grade</button>
+                    <button id="btn-change-batch" onclick="window.open('https://wa.me/919752255335?text=I%20want%20to%20request%20a%20batch%20change.', '_blank')" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-swap text-xl text-blue-600 dark:text-brand-orange"></i> Change Batch Request</button>
+                    <button onclick="openTeacherList()" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-chalkboard-teacher text-xl text-blue-600 dark:text-brand-orange"></i> Contact Teacher</button>
+                    <button onclick="toggleTheme()" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-palette text-xl text-blue-600 dark:text-brand-orange"></i> App Theme</button>
+                    <button id="btn-add-teacher" onclick="openTeacherSignup()" class="hidden flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-user-plus text-xl text-blue-600 dark:text-brand-orange"></i> Add a Teacher</button>
+                    <button onclick="openShareModal()" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-gray-800 dark:text-gray-200 border-b border-gray-200/50 dark:border-white/5 active:bg-gray-100 dark:active:bg-white/10 transition-colors"><i class="ph-fill ph-share-network text-xl text-blue-600 dark:text-brand-orange"></i> Share App</button>
+                    <button onclick="confirmLogout()" class="flex items-center gap-3 w-full p-4 text-sm font-bold text-red-600 active:bg-red-50 dark:active:bg-red-500/10 rounded-b-2xl transition-colors"><i class="ph-bold ph-sign-out text-xl"></i> Log Out</button>
+                </div>
+            </div>
+
+            <!-- 7. FULLSCREEN: ATTENDANCE CALENDAR -->
+            <div id="view-attendance" class="view-section flex-col px-6 pt-12 pb-6 bg-white/30 dark:bg-black/30 backdrop-blur-md">
+                <div class="glass flex items-center justify-between p-3 mb-6 shrink-0 relative z-10 shadow-md">
+                    <button onclick="switchTab('home')" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-white bg-gray-200/50 dark:bg-white/10 transition-transform active:scale-90"><i class="ph-bold ph-arrow-left text-lg"></i></button>
+                    <div class="font-extrabold text-gray-900 dark:text-white tracking-wide">Attendance</div>
+                    <div class="w-10"></div>
+                </div>
+                <div class="glass p-5 mb-4 shadow-sm relative z-10">
+                    <div id="att-teacher-filter" class="hidden mb-3 pb-3 border-b border-gray-200 dark:border-white/10">
+                        <button onclick="openAttBatchPicker()" class="w-full p-2.5 rounded-xl bg-gray-100/80 dark:bg-black/40 text-gray-900 dark:text-white outline-none font-bold shadow-inner flex justify-between items-center transition-transform active:scale-95 text-sm"><span id="att-batch-lbl">All Batches</span> <i class="ph-bold ph-funnel text-blue-600 dark:text-brand-orange"></i></button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="att-month-btn" onclick="openMonthPicker()" class="w-2/3 p-3 rounded-xl bg-gray-100/80 dark:bg-black/40 text-gray-900 dark:text-white outline-none font-bold shadow-inner flex justify-between items-center transition-transform active:scale-95"><span id="att-month-lbl">March</span> <i class="ph-bold ph-caret-down"></i></button>
+                        <button id="att-year-btn" onclick="openYearPicker()" class="w-1/3 p-3 rounded-xl bg-gray-100/80 dark:bg-black/40 text-gray-900 dark:text-white outline-none font-bold shadow-inner flex justify-between items-center transition-transform active:scale-95"><span id="att-year-lbl">2026</span> <i class="ph-bold ph-caret-down"></i></button>
+                    </div>
+                </div>
+                <div id="att-grid" class="glass p-5 grid grid-cols-7 gap-y-3 gap-x-1 text-center font-bold text-gray-700 dark:text-gray-300 shadow-md relative z-10 pb-6"></div>
+            </div>
+
+            <!-- 8. FULLSCREEN: FEES CALENDAR -->
+            <div id="view-fees" class="view-section flex-col px-6 pt-12 pb-6 bg-white/30 dark:bg-black/30 backdrop-blur-md">
+                <div class="glass flex items-center justify-between p-3 mb-6 shrink-0 relative z-10 shadow-md">
+                    <button onclick="switchTab('home')" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-white bg-gray-200/50 dark:bg-white/10 transition-transform active:scale-90"><i class="ph-bold ph-arrow-left text-lg"></i></button>
+                    <div class="font-extrabold text-gray-900 dark:text-white tracking-wide">Fees Tracker</div>
+                    <div class="w-10"></div>
+                </div>
+                <div class="glass p-3 mb-4 flex justify-between items-center shadow-sm relative z-10">
+                    <span class="font-bold pl-3 text-gray-700 dark:text-gray-300">Select Year</span>
+                    <button id="fees-year-btn" onclick="openYearPickerFees()" class="p-2 px-4 rounded-xl bg-gray-100 dark:bg-black/40 text-gray-900 dark:text-white font-bold outline-none flex items-center gap-2 transition-transform active:scale-95"><span id="fees-year-lbl">2026</span> <i class="ph-bold ph-caret-down"></i></button>
+                </div>
+                <div id="fees-list" class="space-y-3 overflow-y-auto pb-10 hide-scrollbar flex-1 relative z-10"></div>
+            </div>
+
+            <!-- 9. FULLSCREEN: UPCOMING TESTS -->
+            <div id="view-tests" class="view-section flex-col px-6 pt-12 pb-6">
+                <div class="glass flex items-center justify-between p-3 mb-6 shrink-0 relative z-10 shadow-md">
+                    <button onclick="switchTab('home')" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-white bg-gray-200/50 dark:bg-white/10 transition-transform active:scale-90"><i class="ph-bold ph-arrow-left text-lg"></i></button>
+                    <div class="font-extrabold text-gray-900 dark:text-white tracking-wide">Upcoming Test</div>
+                    <div class="flex items-center gap-2">
+                        <button id="btn-add-test" onclick="openAddTaskModal('test')" class="hidden w-10 h-10 rounded-full btn-primary-adaptive text-white flex items-center justify-center shadow-md transition-transform active:scale-90"><i class="ph-bold ph-plus text-lg"></i></button>
+                        <div class="relative w-10 h-10 rounded-full flex items-center justify-center bg-gray-200/50 dark:bg-white/10 overflow-hidden active:scale-90 transition-transform">
+                            <i class="ph-bold ph-calendar-blank text-lg text-gray-700 dark:text-white"></i>
+                            <input type="date" id="test-date-filter" onchange="renderTests()" class="absolute inset-0 opacity-0 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+                <div id="tests-list" class="flex-1 overflow-y-auto space-y-4 pb-10 hide-scrollbar relative z-10"></div>
+            </div>
+
+            <!-- 10. FULLSCREEN: HOMEWORK -->
+            <div id="view-homework" class="view-section flex-col px-6 pt-12 pb-6">
+                <div class="glass flex items-center justify-between p-3 mb-6 shrink-0 relative z-10 shadow-md">
+                    <button onclick="switchTab('home')" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-white bg-gray-200/50 dark:bg-white/10 transition-transform active:scale-90"><i class="ph-bold ph-arrow-left text-lg"></i></button>
+                    <div class="font-extrabold text-gray-900 dark:text-white tracking-wide">Homework</div>
+                    <div class="flex items-center gap-2">
+                        <button id="btn-add-hw" onclick="openAddTaskModal('homework')" class="hidden w-10 h-10 rounded-full btn-primary-adaptive text-white flex items-center justify-center shadow-md transition-transform active:scale-90"><i class="ph-bold ph-plus text-lg"></i></button>
+                        <div class="relative w-10 h-10 rounded-full flex items-center justify-center bg-gray-200/50 dark:bg-white/10 overflow-hidden active:scale-90 transition-transform">
+                            <i class="ph-bold ph-calendar-blank text-lg text-gray-700 dark:text-white"></i>
+                            <input type="date" id="hw-date-filter" onchange="renderHomework()" class="absolute inset-0 opacity-0 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+                <div id="homework-list" class="flex-1 overflow-y-auto space-y-4 pb-10 hide-scrollbar relative z-10"></div>
+            </div>
+
+        </main>
+
+        <!-- BOTTOM NAV BAR -->
+        <nav id="bottom-nav" style="display: none;" class="absolute bottom-6 left-6 right-6 tab-bar rounded-3xl p-2 justify-between items-center z-50 flex">
+            <div class="tab-item active flex-1 flex flex-col items-center gap-1 py-2 cursor-pointer rounded-2xl relative" onclick="switchTab('home', this)">
+                <i class="ph-fill ph-house text-2xl text-gray-400"></i><span class="text-[10px] text-gray-500">Home</span>
+            </div>
+            <div class="tab-item flex-1 flex flex-col items-center gap-1 py-2 cursor-pointer rounded-2xl relative" onclick="switchTab('students', this)">
+                <i class="ph-fill ph-users text-2xl text-gray-400"></i><span class="text-[10px] text-gray-500">Students</span>
+            </div>
+            <div class="tab-item flex-1 flex flex-col items-center gap-1 py-2 cursor-pointer rounded-2xl relative" onclick="switchTab('batches', this)">
+                <i class="ph-fill ph-books text-2xl text-gray-400"></i><span class="text-[10px] text-gray-500">Batches</span>
+            </div>
+            <div class="tab-item flex-1 flex flex-col items-center gap-1 py-2 cursor-pointer rounded-2xl relative" onclick="switchTab('chat', this)">
+                <i class="ph-fill ph-robot text-2xl text-gray-400"></i><span class="text-[10px] text-gray-500">Catalyzer AI</span>
+            </div>
+            <div class="tab-item flex-1 flex flex-col items-center gap-1 py-2 cursor-pointer rounded-2xl relative" onclick="switchTab('profile', this)">
+                <i class="ph-fill ph-user-circle text-2xl text-gray-400"></i><span class="text-[10px] text-gray-500">Profile</span>
+            </div>
+        </nav>
+
+        <!-- ── MODALS LAYER ── -->
+
+        <div id="picker-modal" class="absolute inset-0 z-[120] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closePickerModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl flex flex-col shadow-2xl transition-all duration-300">
+                <h3 id="picker-title" class="font-extrabold text-xl mb-4 text-gray-900 dark:text-white text-center border-b border-gray-200 dark:border-white/10 pb-3">Select</h3>
+                <div id="picker-list" class="flex flex-col gap-2 overflow-y-auto max-h-[50vh] hide-scrollbar"></div>
+            </div>
+        </div>
+
+        <!-- Grade Selection Grid Modal -->
+        <div id="grade-picker-modal" class="absolute inset-0 z-[150] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeGradePicker()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-[32px] flex flex-col shadow-2xl">
+                <h3 class="font-extrabold text-xl mb-6 text-gray-900 dark:text-white text-center">Select Grade</h3>
+                <div class="grid grid-cols-3 gap-3" id="grade-grid"></div>
+            </div>
+        </div>
+
+        <div id="name-modal" class="absolute inset-0 z-[120] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeNameChangeModal()"></div>
+            <div class="glass w-[90%] p-6 relative z-10 rounded-3xl flex flex-col shadow-2xl space-y-4">
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white text-center">Change Name</h3>
+                <input type="text" id="nm-first" class="student-input" placeholder="First Name">
+                <input type="text" id="nm-last" class="student-input" placeholder="Last Name">
+                <div class="flex gap-2 mt-2">
+                    <button onclick="closeNameChangeModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button onclick="saveNameChange()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Modal (Test / HW View) -->
+        <div id="details-modal" class="absolute inset-0 z-[200] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-md" onclick="closeDetailsModal()"></div>
+            <div class="glass w-[92%] max-w-[500px] h-[75vh] p-6 relative z-10 rounded-[32px] shadow-2xl flex flex-col border border-white/20">
+                <button onclick="closeDetailsModal()" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100/50 dark:bg-white/10 text-gray-700 dark:text-white active:scale-90 transition-all z-20 shadow-sm"><i class="ph ph-x text-xl"></i></button>
+                
+                <div class="flex flex-col items-start gap-2 mb-4">
+                    <span id="dm-title" class="font-extrabold text-blue-600 dark:text-brand-orange text-[10px] uppercase tracking-widest bg-blue-600/10 dark:bg-brand-orange/10 px-3 py-1.5 rounded-lg border border-blue-600/10"></span>
+                    <span id="dm-date" class="text-[11px] font-black text-gray-600 dark:text-gray-300 bg-white dark:bg-white/10 px-3 py-1.5 rounded-lg shadow-sm border border-white/10"></span>
+                </div>
+                
+                <h3 id="dm-subject" class="font-black text-gray-900 dark:text-white text-3xl mb-4 leading-tight tracking-tight pr-8"></h3>
+                
+                <div class="flex-1 overflow-y-auto pr-1 custom-scroll hide-scrollbar mt-1 bg-gray-50/50 dark:bg-black/20 rounded-2xl p-4 border border-gray-100/50 dark:border-white/5">
+                    <p id="dm-desc" class="text-base text-gray-700 dark:text-gray-200 leading-[1.6] font-medium whitespace-pre-line"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generic Confirmation Modal -->
+        <div id="confirm-modal" class="absolute inset-0 z-[250] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="closeConfirmModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl flex flex-col shadow-2xl text-center">
+                <div class="w-16 h-16 rounded-full bg-red-500/10 text-red-600 flex items-center justify-center mx-auto mb-4"><i class="ph-bold ph-trash text-3xl"></i></div>
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white mb-2" id="confirm-title">Are you sure?</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6" id="confirm-msg">This action cannot be undone.</p>
+                <div class="flex gap-2">
+                    <button onclick="closeConfirmModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button id="confirm-execute-btn" class="flex-1 glass-btn py-3 rounded-xl font-bold text-white bg-red-600 border-red-600 dark:bg-red-600 shadow-lg">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Management Panel (Admin ONLY) -->
+        <div id="admin-teacher-modal" class="absolute inset-0 z-[180] hidden flex flex-col justify-end p-0">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeAdminTeacherList()"></div>
+            <div class="glass w-full h-[85vh] rounded-t-[40px] rounded-b-none relative z-10 flex flex-col pb-6 transform transition-transform translate-y-full shadow-2xl" id="admin-teacher-content" style="transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)">
+                <div class="w-12 h-1.5 bg-gray-300 dark:bg-white/20 rounded-full mx-auto my-4 shrink-0"></div>
+                
+                <div class="px-8 flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Active Teachers</h2>
+                    <button onclick="closeAdminTeacherList()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-600 dark:text-white active:scale-90 shadow-sm"><i class="ph ph-x"></i></button>
+                </div>
+
+                <div id="admin-teacher-scroll-list" class="flex-1 overflow-y-auto px-6 space-y-4 pb-12 hide-scrollbar"></div>
+            </div>
+        </div>
+
+        <div id="share-modal" class="absolute inset-0 z-[120] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeShareModal()"></div>
+            <div class="glass w-[90%] p-6 relative z-10 rounded-3xl shadow-2xl space-y-4">
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white text-center">Share App</h3>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="share-link-input" class="student-input flex-1" readonly>
+                    <button onclick="copyShareLink()" class="w-12 h-12 rounded-xl glass-btn btn-primary-adaptive flex items-center justify-center shrink-0 shadow-lg">
+                        <i class="ph-bold ph-copy text-xl"></i>
+                    </button>
+                </div>
+                <button onclick="closeShareModal()" class="w-full glass-btn py-3 rounded-xl font-bold text-gray-700 dark:text-gray-300 mt-2">Close</button>
+            </div>
+        </div>
+
+        <div id="tracker-modal" class="absolute inset-0 z-[120] hidden flex flex-col justify-end p-0">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTrackerModal()"></div>
+            <div class="glass w-full h-[80vh] rounded-t-[32px] rounded-b-none relative z-10 flex flex-col pb-6 transform transition-transform translate-y-full shadow-2xl" id="tracker-modal-content" style="transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)">
+                <div class="w-12 h-1.5 bg-gray-300 dark:bg-white/20 rounded-full mx-auto my-4 shrink-0"></div>
+                <div class="px-6 mb-4 shrink-0 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900 dark:text-white" id="tracker-head">Track</h2>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mt-1" id="tracker-sub"></p>
+                    </div>
+                </div>
+                <div id="tracker-list" class="flex-1 overflow-y-auto px-6 space-y-3 pb-12 hide-scrollbar"></div>
+            </div>
+        </div>
+
+        <div id="notice-modal" class="absolute inset-0 z-[120] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeNoticeModal()"></div>
+            <div class="glass w-[90%] p-6 relative z-10 rounded-3xl shadow-2xl space-y-4">
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white text-center">Edit Notice</h3>
+                <textarea id="notice-text" class="student-input h-32 resize-none" placeholder="Enter notice here..."></textarea>
+                <div class="flex gap-2 mt-2">
+                    <button onclick="closeNoticeModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button onclick="saveNotice()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="logout-modal" class="absolute inset-0 z-[200] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeLogoutModal()"></div>
+            <div class="glass w-[90%] p-6 relative z-10 rounded-3xl flex flex-col shadow-2xl text-center">
+                <div class="w-16 h-16 rounded-full bg-red-500/10 text-red-600 flex items-center justify-center mx-auto mb-4"><i class="ph-bold ph-sign-out text-3xl"></i></div>
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white mb-2">Log Out</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Are you sure you want to log out from this device?</p>
+                <div class="flex gap-2">
+                    <button onclick="closeLogoutModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button onclick="executeLogout()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-white bg-red-600 border-red-600 dark:bg-red-600 shadow-lg">Log Out</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="teacher-signup-modal" class="absolute inset-0 z-[110] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTeacherSignup()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl shadow-2xl max-h-[85vh] overflow-y-auto hide-scrollbar">
+                <h3 class="font-extrabold text-xl mb-4 text-gray-900 dark:text-white text-center">Add Teacher</h3>
+                <div class="space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="ts-fname" class="student-input text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold" placeholder="First Name">
+                        <input type="text" id="ts-lname" class="student-input text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold" placeholder="Last Name">
+                    </div>
+                    <input type="tel" id="ts-phone" class="student-input text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold" placeholder="Phone Number">
+                    <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
+                    <input type="password" id="ts-pass" class="student-input text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold" placeholder="Set Password">
+                    <input type="password" id="ts-adminpass" class="student-input border-red-500/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-bold" placeholder="Admin Secret Password">
+                    <button onclick="submitTeacherSignup()" class="w-full glass-btn btn-primary-adaptive py-3.5 rounded-xl font-bold mt-2 shadow-lg">Create Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="batch-edit-modal" class="absolute inset-0 z-[110] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeBatchEditModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl shadow-2xl space-y-3">
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white text-center mb-2" id="bem-head">Manage Batch</h3>
+                <input type="hidden" id="bem-id">
+                <input type="text" id="bem-title" class="student-input" placeholder="Batch Title (e.g. Morning Batch)">
+                <input type="text" id="bem-time" class="student-input" placeholder="Time (From - To)">
+                <input type="text" id="bem-subject" class="student-input" placeholder="Subject">
+                <input type="hidden" id="bem-teacher-val">
+                <button type="button" id="bem-teacher-btn" onclick="openTeacherSelectionForBatch()" class="student-input text-left text-gray-500 overflow-hidden whitespace-nowrap">Select Teacher</button>
+                
+                <div class="flex gap-2 mt-4">
+                    <button onclick="closeBatchEditModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button onclick="saveBatch()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-task-modal" class="absolute inset-0 z-[110] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeAddTaskModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl shadow-2xl space-y-3">
+                <h3 class="font-extrabold text-xl text-gray-900 dark:text-white text-center mb-4" id="atm-title">Add Data</h3>
+                <input type="hidden" id="atm-id-key">
+                <input type="hidden" id="atm-type">
+                
+                <div>
+                    <label class="task-label">Schedule Date</label>
+                    <input type="date" id="atm-date" class="student-input task-input">
+                </div>
+                <div>
+                    <label class="task-label">Target Grade</label>
+                    <button type="button" id="atm-grade-btn" onclick="openGradePicker('atm-grade-btn')" class="student-input task-input text-left">Grade (1-12)</button>
+                </div>
+                <div>
+                    <label class="task-label">Task Subject</label>
+                    <input type="text" id="atm-subject" class="student-input task-input" placeholder="e.g. Mathematics">
+                </div>
+                <div>
+                    <label class="task-label">Detailed Description</label>
+                    <textarea id="atm-desc" class="student-input task-input h-24 resize-none" placeholder="Provide full details..."></textarea>
+                </div>
+
+                <div class="flex gap-2 mt-4">
+                    <button onclick="closeAddTaskModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                    <button onclick="saveTask()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Editor Modal -->
+        <div id="student-modal" class="absolute inset-0 z-[100] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeStudentModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl shadow-2xl max-h-[85vh] overflow-y-auto hide-scrollbar">
+                <button onclick="closeStudentModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-white"><i class="ph ph-x"></i></button>
+                <div class="flex items-center gap-3 mb-5 mt-1">
+                    <img id="modal-avatar" src="" class="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10 object-cover">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 dark:text-white leading-tight" id="modal-title-name">Name</h2>
+                        <span class="text-[10px] font-bold text-blue-600 dark:text-brand-purple uppercase tracking-widest bg-blue-600/10 dark:bg-brand-purple/10 px-2 py-0.5 rounded-md">Student Profile</span>
+                    </div>
+                </div>
+                
+                <form id="student-details-form" class="space-y-3 pr-1 pb-2">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">First Name</label><input type="text" id="modal-fname" class="student-input" readonly></div>
+                        <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">Last Name</label><input type="text" id="modal-lname" class="student-input" readonly></div>
+                    </div>
+                    <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">Father's Name</label><input type="text" id="modal-father" class="student-input" readonly></div>
+                    <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">Location</label><input type="text" id="modal-loc" class="student-input" readonly></div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">Grade</label><button type="button" id="modal-grade-btn" onclick="openGradePicker('modal-grade-btn')" class="student-input text-left overflow-hidden whitespace-nowrap" disabled>Grade</button></div>
+                        <div class="flex flex-col"><label class="text-[10px] uppercase font-bold text-gray-500 mb-1 ml-1">Batch</label><button type="button" id="modal-batch-btn" onclick="openBatchSelectionForEdit()" class="student-input text-left overflow-hidden whitespace-nowrap" disabled>Batch</button></div>
+                    </div>
+
+                    <div id="student-view-btns" class="mt-4 space-y-2 pt-2 border-t border-gray-200 dark:border-white/10 hidden">
+                        <div class="flex gap-2">
+                            <button type="button" onclick="enableStudentEdit()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Edit</button>
+                            <button type="button" onclick="deleteStudent()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 border-red-600/30 bg-red-500/10 dark:bg-red-500/20">Delete</button>
+                        </div>
+                    </div>
+                    <div id="student-edit-btns" class="mt-4 space-y-2 pt-2 border-t border-gray-200 dark:border-white/10 hidden">
+                        <div class="flex gap-2">
+                            <button type="button" onclick="closeStudentModal()" class="flex-1 glass-btn py-3 rounded-xl font-bold text-red-600 dark:text-red-500">Cancel</button>
+                            <button type="button" onclick="saveStudent()" class="flex-1 glass-btn btn-primary-adaptive py-3 rounded-xl font-bold shadow-lg">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="teacher-list-modal" class="absolute inset-0 z-[100] hidden flex flex-col justify-end p-0">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTeacherList()"></div>
+            <div class="glass w-full h-[70vh] rounded-t-[32px] rounded-b-none relative z-10 flex flex-col pb-6 transform transition-transform translate-y-full shadow-2xl" id="teacher-list-content-wrapper" style="transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)">
+                <div class="w-12 h-1.5 bg-gray-300 dark:bg-white/20 rounded-full mx-auto my-4 shrink-0"></div>
+                <h2 class="text-xl font-extrabold text-gray-900 dark:text-white px-6 mb-4 shrink-0">Contact Teachers</h2>
+                <div id="teacher-list-content" class="flex-1 overflow-y-auto px-6 space-y-3 pb-6 hide-scrollbar"></div>
+            </div>
+        </div>
+
+        <div id="avatar-modal" class="absolute inset-0 z-[110] hidden flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeAvatarModal()"></div>
+            <div class="glass w-[90%] max-w-[340px] p-6 relative z-10 rounded-3xl flex flex-col items-center max-h-[70vh] shadow-2xl">
+                <h3 class="font-extrabold text-xl mb-4 text-gray-900 dark:text-white text-center w-full border-b border-gray-200 dark:border-white/10 pb-3">Choose Avatar</h3>
+                <div class="grid grid-cols-4 gap-3 overflow-y-auto w-full pr-1 hide-scrollbar" id="avatar-grid"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // PWA SERVICE WORKER REGISTRATION (Logic for Install Button and Standalone)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swContent = `self.addEventListener('fetch', (event) => { event.respondWith(fetch(event.request)); });`;
+                const blob = new Blob([swContent], { type: 'text/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                navigator.serviceWorker.register(swUrl).catch(err => console.log("SW Reg Error: ", err));
+            });
+        }
+
+        let currentUser = null;
+        let userRole = null; 
+        let allUsers = {};
+        let allBatches =[];
+        let allTeachers = {};
+        let selectedStudentPhone = null;
+        let isSignupAvatar = false;
+        let selectedSignupAvatar = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Default';
+        let trackerContext = {}; 
+        let currentAttBatch = 'All Batches';
+        let activeGradeTarget = null;
+        
+        window.taskStore = {}; 
+
+        const avatarSeeds =["Rahul","Priya","Amit","Neha","Rohan","Sneha","Vikas","Pooja","Arjun","Anjali","Karan","Kavita","Samir","Riya","Tarun","Nisha","Yash","Kiran","Dev","Meera"];
+        const monthsArr =["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+        let currentAttMonth = new Date().getMonth();
+        let currentAttYear = new Date().getFullYear();
+        if(currentAttYear < 2026) currentAttYear = 2026;
+        if(currentAttYear === 2026 && currentAttMonth < 2) currentAttMonth = 2;
+        let currentFeesYear = currentAttYear;
+
+        const SYSTEM_TODAY = new Date().toISOString().split('T')[0];
+
+        /* ── THEME & FULLSCREEN STATUS BAR LOGIC ── */
+        function toggleTheme() {
+            let mode = localStorage.getItem('tusion-theme');
+            if(mode === 'system') mode = 'light';
+            else if(mode === 'light') mode = 'dark';
+            else mode = 'system';
+            localStorage.setItem('tusion-theme', mode);
+            updateThemeUI();
+        }
+        function updateThemeUI() {
+            let mode = localStorage.getItem('tusion-theme') || 'system';
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const metaThemeColor = document.getElementById('status-bar-color');
+            
+            let isDark = false;
+            if (mode === 'system') {
+                isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            } else {
+                isDark = (mode === 'dark');
+            }
+
+            html.classList.toggle('dark', isDark);
+            
+            // Match status bar color to background
+            if(metaThemeColor) {
+                metaThemeColor.setAttribute('content', isDark ? '#050505' : '#f0f4f8');
+            }
+
+            if(icon) {
+                if(isDark) icon.className = "ph-fill ph-moon text-xl text-white";
+                else icon.className = "ph-fill ph-sun text-xl text-gray-700";
+            }
+        }
+        updateThemeUI();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeUI);
+
+        // Slider Logic
+        function handleSliderAction() {
+            const slider = document.getElementById('highlight-slider');
+            const idx = Math.round(slider.scrollLeft / slider.clientWidth);
+            if(idx >= 2) showView('view-auth');
+            else slider.scrollBy({left: slider.clientWidth, behavior: 'smooth'});
+        }
+        document.getElementById('highlight-slider').addEventListener('scroll', () => {
+            const slider = document.getElementById('highlight-slider');
+            const idx = Math.round(slider.scrollLeft / slider.clientWidth);
+            const btn = document.getElementById('btn-slider-action');
+            if(idx >= 2) btn.innerText = "Get Started";
+            else btn.innerText = "Continue";
+        });
+
+        // App Init
+        window.addEventListener('firebaseReady', () => {
+            fetchBatches(); 
+            const savedUser = localStorage.getItem('tusion-user');
+            if(savedUser) {
+                try {
+                    const parsed = JSON.parse(savedUser);
+                    const path = parsed.role === 'teacher' ? `admin/teachers/${parsed.phone}` : `users/${parsed.phone}`;
+                    window.fb.get(window.fb.ref(window.fb.db, path)).then(snap => {
+                        if(snap.exists()) {
+                            currentUser = { phone: parsed.phone, ...snap.val() };
+                            userRole = parsed.role;
+                            finishLogin(true);
+                        } else { localStorage.removeItem('tusion-user'); setTimeout(() => showView('view-highlights'), 1000); }
+                    }).catch(() => setTimeout(() => showView('view-highlights'), 1000));
+                } catch(e) { setTimeout(() => showView('view-highlights'), 1000); }
+            } else { setTimeout(() => showView('view-highlights'), 2000); }
+        });
+
+        async function fetchBatches() {
+            if(!window.fb) return;
+            const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/batches'));
+            if(snap.exists()) {
+                const data = snap.val();
+                allBatches = Object.keys(data).map(k => ({ id: k, ...data[k] }));
+            } else { allBatches =[]; }
+        }
+
+        /* ── NAVIGATION LOGIC ── */
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function switchTab(viewId, tabElement = null) {
+            document.getElementById('bottom-nav').style.display = 'flex';
+            if(tabElement) {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                tabElement.classList.add('active');
+            } else {
+                const tabs = document.querySelectorAll('.tab-item');
+                tabs.forEach(t => t.classList.remove('active'));
+                const mapping = { 'home':0, 'students':1, 'batches':2, 'chat':3, 'profile':4 };
+                if(mapping[viewId] !== undefined) tabs[mapping[viewId]].classList.add('active');
+            }
+
+            const header = document.getElementById('main-header');
+            if(viewId === 'home') {
+                header.style.display = 'flex';
+                setTimeout(() => {
+                    header.classList.remove('max-h-0', 'opacity-0', 'pt-0', 'pb-0', '-translate-y-10');
+                    header.classList.add('max-h-[150px]', 'opacity-100', 'pt-12', 'pb-4', 'translate-y-0');
+                    header.style.pointerEvents = 'auto';
+                }, 10);
+            } else {
+                header.classList.add('max-h-0', 'opacity-0', 'pt-0', 'pb-0', '-translate-y-10');
+                header.classList.remove('max-h-[150px]', 'opacity-100', 'pt-12', 'pb-4', 'translate-y-0');
+                header.style.pointerEvents = 'none';
+                setTimeout(() => { if(!header.classList.contains('max-h-[150px]')) header.style.display = 'none'; }, 500);
+            }
+            if(viewId === 'chat') document.getElementById('bottom-nav').style.display = 'none';
+
+            showView('view-' + viewId);
+            if(viewId === 'students') renderStudentsList();
+            if(viewId === 'batches') renderBatchesList();
+        }
+
+        function switchFullScreen(viewId) {
+            document.getElementById('main-header').style.display = 'none';
+            document.getElementById('bottom-nav').style.display = 'none';
+            showView('view-' + viewId);
+            
+            if(viewId === 'attendance') renderAttendance();
+            if(viewId === 'fees') renderFees();
+            if(viewId === 'tests') renderTests();
+            if(viewId === 'homework') renderHomework();
+        }
+
+        /* ── AUTH LOGIC ── */
+        function toggleAuthMode(mode) {
+            if(mode === 'login') {
+                document.getElementById('form-login').classList.remove('hidden');
+                document.getElementById('form-signup').classList.add('hidden');
+                document.getElementById('tab-login').className = "flex-1 py-2 text-sm font-bold rounded-full bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow transition-all";
+                document.getElementById('tab-signup').className = "flex-1 py-2 text-sm font-bold rounded-full text-gray-500 transition-all";
+            } else {
+                document.getElementById('form-signup').classList.remove('hidden');
+                document.getElementById('form-login').classList.add('hidden');
+                document.getElementById('tab-signup').className = "flex-1 py-2 text-sm font-bold rounded-full bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow transition-all";
+                document.getElementById('tab-login').className = "flex-1 py-2 text-sm font-bold rounded-full text-gray-500 transition-all";
+            }
+        }
+
+        function generateFirebaseStructure() {
+            let att = {}, fees = {};
+            for(let y=2026; y<=2029; y++) {
+                att[y] = {}; fees[y] = {};
+                for(let m=(y===2026?2:0); m<12; m++) {
+                    fees[y][m] = false; att[y][m] = {};
+                    let daysInMonth = new Date(y, m+1, 0).getDate();
+                    for(let d=1; d<=daysInMonth; d++) { att[y][m][d] = false; }
+                }
+            }
+            return { att, fees };
+        }
+
+        async function doLogin(e) {
+            e.preventDefault();
+            const phone = document.getElementById('log-phone').value;
+            const pass = document.getElementById('log-pass').value;
+            const btn = document.getElementById('btn-login');
+            btn.innerText = "Checking...";
+            if(!window.fb) return alert('Firebase init failed.');
+            try {
+                let snap = await window.fb.get(window.fb.ref(window.fb.db, `admin/teachers/${phone}`));
+                if(snap.exists() && snap.val().password === pass) {
+                    userRole = 'teacher'; currentUser = { phone, ...snap.val() }; finishLogin(); return;
+                }
+                snap = await window.fb.get(window.fb.ref(window.fb.db, `users/${phone}`));
+                if(snap.exists() && snap.val().password === pass) {
+                    userRole = 'student'; currentUser = { phone, ...snap.val() }; finishLogin(); return;
+                }
+                alert("Invalid Phone Number or Password.");
+            } catch(err) { alert("Database error: " + err.message); } finally { btn.innerText = "Login Securely"; }
+        }
+
+        async function doSignup(e) {
+            e.preventDefault();
+            const phone = document.getElementById('su-phone').value;
+            const pass = document.getElementById('su-pass').value;
+            const batch = document.getElementById('su-batch-btn').innerText;
+            const grade = document.getElementById('su-grade-btn').innerText;
+
+            if(pass.length < 8) return alert("Password must be at least 8 characters long.");
+            if(pass !== document.getElementById('su-conf-pass').value) return alert("Passwords do not match!");
+            if(batch === 'Choose Batch') return alert("Select a batch!");
+            if(grade === 'Grade (e.g. 10)') return alert("Select your grade!");
+
+            const btn = document.getElementById('btn-signup');
+            btn.innerText = "Checking...";
+
+            try {
+                const userExists = await window.fb.get(window.fb.ref(window.fb.db, `users/${phone}`));
+                const teacherExists = await window.fb.get(window.fb.ref(window.fb.db, `admin/teachers/${phone}`));
+                
+                if(userExists.exists() || teacherExists.exists()) {
+                    alert("This phone number is already registered.");
+                    btn.innerText = "Create Account";
+                    return;
+                }
+
+                btn.innerText = "Creating...";
+                const struct = generateFirebaseStructure();
+                const userData = {
+                    profilePic: selectedSignupAvatar,
+                    firstName: document.getElementById('su-fname').value,
+                    lastName: document.getElementById('su-lname').value,
+                    fatherName: document.getElementById('su-father').value,
+                    location: document.getElementById('su-location').value,
+                    grade: grade,
+                    batch: batch,
+                    password: pass,
+                    attendance: struct.att, 
+                    feesStatus: struct.fees
+                };
+
+                await window.fb.set(window.fb.ref(window.fb.db, `users/${phone}`), userData);
+                userRole = 'student'; currentUser = { phone, ...userData }; finishLogin();
+            } catch(err) { alert("Error signing up: " + err.message); } finally { btn.innerText = "Create Account"; }
+        }
+
+        function finishLogin() {
+            localStorage.setItem('tusion-user', JSON.stringify({ phone: currentUser.phone, role: userRole }));
+            document.getElementById('logged-user-name').innerText = `${currentUser.firstName} ${currentUser.lastName || ''}`;
+            document.getElementById('logged-user-role').innerText = userRole === 'teacher' ? 'Admin / Staff' : 'Student';
+            
+            const gradeCard = document.getElementById('logged-user-grade-card');
+            if(userRole === 'teacher') {
+                gradeCard.classList.add('hidden');
+                document.getElementById('btn-admin-teachers-panel').classList.remove('hidden');
+            } else {
+                gradeCard.classList.remove('hidden');
+                gradeCard.innerText = `Grade ${currentUser.grade}`;
+                document.getElementById('btn-admin-teachers-panel').classList.add('hidden');
+            }
+
+            document.getElementById('profile-avatar-img').src = currentUser.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.firstName}`;
+            document.getElementById('header-subtitle').innerText = `Hi, ${currentUser.firstName}`;
+            
+            if(userRole === 'teacher') {
+                document.getElementById('btn-add-teacher').classList.remove('hidden');
+                document.getElementById('btn-edit-notice').classList.remove('hidden');
+                document.getElementById('btn-add-batch').classList.remove('hidden');
+                document.getElementById('btn-add-test').classList.remove('hidden');
+                document.getElementById('btn-add-hw').classList.remove('hidden');
+                document.getElementById('btn-change-batch').classList.add('hidden');
+                document.getElementById('btn-change-grade-profile').classList.add('hidden');
+                document.getElementById('att-teacher-filter').classList.remove('hidden');
+            } else {
+                document.getElementById('btn-add-teacher').classList.add('hidden');
+                document.getElementById('btn-edit-notice').classList.add('hidden');
+                document.getElementById('btn-add-batch').classList.add('hidden');
+                document.getElementById('btn-add-test').classList.add('hidden');
+                document.getElementById('btn-add-hw').classList.add('hidden');
+                document.getElementById('btn-change-batch').classList.remove('hidden');
+                document.getElementById('btn-change-grade-profile').classList.remove('hidden');
+                document.getElementById('att-teacher-filter').classList.add('hidden');
+            }
+
+            if(window.fb) {
+                window.fb.get(window.fb.ref(window.fb.db, 'admin/notice')).then(snap => {
+                    if(snap.exists()) document.getElementById('home-notice').innerText = snap.val();
+                });
+            }
+            switchTab('home');
+        }
+
+        /* ── CONFIRMATION MODAL ── */
+        let confirmCallback = null;
+        function openConfirmModal(title, msg, callback) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-msg').innerText = msg;
+            confirmCallback = callback;
+            document.getElementById('confirm-modal').classList.remove('hidden');
+            document.getElementById('confirm-execute-btn').onclick = () => {
+                if(confirmCallback) confirmCallback();
+                closeConfirmModal();
+            };
+        }
+        function closeConfirmModal() { document.getElementById('confirm-modal').classList.add('hidden'); }
+
+        /* ── GRADE PICKER LOGIC ── */
+        function openGradePicker(targetId) {
+            activeGradeTarget = targetId;
+            const grid = document.getElementById('grade-grid');
+            grid.innerHTML = '';
+            for(let i=1; i<=12; i++) {
+                grid.innerHTML += `
+                    <button onclick="selectGrade('${i}')" class="glass p-5 font-black text-xl text-blue-600 dark:text-brand-orange hover:scale-105 active:scale-95 transition-all shadow-md">
+                        ${i}
+                    </button>
+                `;
+            }
+            document.getElementById('grade-picker-modal').classList.remove('hidden');
+        }
+        function closeGradePicker() { document.getElementById('grade-picker-modal').classList.add('hidden'); }
+        async function selectGrade(val) {
+            const btn = document.getElementById(activeGradeTarget);
+            if(btn) {
+                btn.innerText = val;
+                btn.classList.replace('text-gray-500', 'text-gray-900');
+            }
+            
+            if(activeGradeTarget === 'btn-change-grade-profile') {
+                const path = `users/${currentUser.phone}/grade`;
+                await window.fb.set(window.fb.ref(window.fb.db, path), val);
+                currentUser.grade = val;
+                document.getElementById('logged-user-grade-card').innerText = `Grade ${val}`;
+                btn.innerHTML = `<i class="ph-fill ph-identification-card text-xl text-blue-600 dark:text-brand-orange"></i> Grade changed to ${val}`;
+            }
+            closeGradePicker();
+        }
+
+        /* ── TEACHER ADMIN PANEL ── */
+        async function openAdminTeacherList() {
+            const modal = document.getElementById('admin-teacher-modal');
+            const content = document.getElementById('admin-teacher-content');
+            const list = document.getElementById('admin-teacher-scroll-list');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => content.classList.remove('translate-y-full'), 10);
+            
+            list.innerHTML = '<p class="text-center text-gray-500 py-10 font-bold">Fetching Teachers...</p>';
+            
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/teachers'));
+                list.innerHTML = '';
+                if(snap.exists()) {
+                    const data = snap.val();
+                    for(let phone in data) {
+                        const t = data[phone];
+                        list.innerHTML += `
+                            <div class="glass p-4 flex justify-between items-center shadow-md">
+                                <div class="flex items-center gap-4">
+                                    <img src="${t.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${t.firstName}`}" class="w-12 h-12 rounded-full object-cover border border-white/20">
+                                    <div>
+                                        <div class="font-black text-gray-900 dark:text-white leading-tight">${t.firstName} ${t.lastName || ''}</div>
+                                        <div class="text-xs font-bold text-gray-500 mt-0.5">${phone}</div>
+                                    </div>
+                                </div>
+                                <button onclick="deleteTeacherRecord('${phone}')" class="w-10 h-10 rounded-full bg-red-500/10 text-red-600 flex items-center justify-center active:scale-90 transition-all">
+                                    <i class="ph-bold ph-trash text-lg"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                } else { list.innerHTML = '<p class="text-center text-gray-500">No teachers found.</p>'; }
+            } catch(e) { list.innerHTML = '<p class="text-center text-red-500">Error fetching teachers list.</p>'; }
+        }
+
+        function closeAdminTeacherList() {
+            const content = document.getElementById('admin-teacher-content');
+            content.classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('admin-teacher-modal').classList.add('hidden'), 500);
+        }
+
+        function deleteTeacherRecord(phone) {
+            openConfirmModal("Delete Teacher", "Are you sure you want to delete this teacher? Access will be revoked immediately.", async () => {
+                await window.fb.remove(window.fb.ref(window.fb.db, `admin/teachers/${phone}`));
+                openAdminTeacherList();
+            });
+        }
+
+        /* ── CUSTOM PICKER ── */
+        let pickerCallback = null;
+        function openPickerModal(title, options, callback) {
+            document.getElementById('picker-title').innerText = title;
+            const list = document.getElementById('picker-list');
+            list.innerHTML = '';
+            options.forEach(o => {
+                const isActive = o.isActive;
+                list.innerHTML += `<button onclick="handlePickerSelect('${o.value}')" class="w-full text-left p-4 rounded-xl font-bold transition-all ${isActive ? 'btn-primary-adaptive shadow-md' : 'bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-gray-200'}">${o.label}</button>`;
+            });
+            pickerCallback = callback;
+            document.getElementById('picker-modal').classList.remove('hidden');
+        }
+        function closePickerModal() { document.getElementById('picker-modal').classList.add('hidden'); }
+        function handlePickerSelect(val) { if(pickerCallback) pickerCallback(val); closePickerModal(); }
+
+        function openBatchSelection() {
+            let opts = allBatches.map(b => ({ label: b.title, value: b.title, isActive: false }));
+            openPickerModal('Select Batch', opts, (val) => {
+                document.getElementById('su-batch-btn').innerText = val;
+                document.getElementById('su-batch-btn').classList.replace('text-gray-500', 'text-gray-900');
+            });
+        }
+        function openBatchSelectionForEdit() {
+            let current = document.getElementById('modal-batch-btn').innerText;
+            let opts = allBatches.map(b => ({ label: b.title, value: b.title, isActive: (b.title === current) }));
+            openPickerModal('Select Batch', opts, (val) => document.getElementById('modal-batch-btn').innerText = val);
+        }
+
+        async function openTeacherSelectionForBatch() {
+            const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/teachers'));
+            let opts =[];
+            if(snap.exists()) {
+                allTeachers = snap.val();
+                for(let phone in allTeachers) {
+                    opts.push({ label: `${allTeachers[phone].firstName} ${allTeachers[phone].lastName||''}`, value: phone, isActive: false });
+                }
+            }
+            openPickerModal('Select Teacher', opts, (val) => {
+                const t = allTeachers[val];
+                document.getElementById('bem-teacher-btn').innerText = `${t.firstName} ${t.lastName||''}`;
+                document.getElementById('bem-teacher-val').value = val;
+            });
+        }
+
+        function openAttBatchPicker() {
+            let opts =[{ label: 'All Batches', value: 'All Batches', isActive: currentAttBatch === 'All Batches' }];
+            allBatches.forEach(b => {
+                opts.push({ label: b.title, value: b.title, isActive: currentAttBatch === b.title });
+            });
+            openPickerModal('Filter by Batch', opts, (val) => {
+                currentAttBatch = val;
+                document.getElementById('att-batch-lbl').innerText = val;
+            });
+        }
+
+        function openMonthPicker() {
+            let opts =[];
+            for(let i=0; i<12; i++) {
+                if(currentAttYear === 2026 && i < 2) continue; 
+                opts.push({ label: monthsArr[i], value: i, isActive: (i === currentAttMonth) });
+            }
+            openPickerModal('Select Month', opts, (val) => {
+                currentAttMonth = parseInt(val);
+                document.getElementById('att-month-lbl').innerText = monthsArr[currentAttMonth];
+                renderAttendance();
+            });
+        }
+        function openYearPicker() {
+            let opts =[2026, 2027, 2028, 2029].map(y => ({ label: y, value: y, isActive: (y === currentAttYear) }));
+            openPickerModal('Select Year', opts, (val) => {
+                currentAttYear = parseInt(val);
+                if(currentAttYear === 2026 && currentAttMonth < 2) {
+                    currentAttMonth = 2; document.getElementById('att-month-lbl').innerText = monthsArr[currentAttMonth];
+                }
+                document.getElementById('att-year-lbl').innerText = currentAttYear;
+                renderAttendance();
+            });
+        }
+        function openYearPickerFees() {
+            let opts =[2026, 2027, 2028, 2029].map(y => ({ label: y, value: y, isActive: (y === currentFeesYear) }));
+            openPickerModal('Select Year', opts, (val) => {
+                currentFeesYear = parseInt(val);
+                document.getElementById('fees-year-lbl').innerText = currentFeesYear;
+                renderFees();
+            });
+        }
+
+        /* ── ADMIN / TEACHER ACTIONS ── */
+        function editNotice() {
+            const current = document.getElementById('home-notice').innerText;
+            document.getElementById('notice-text').value = (current === 'Fetching latest notices...') ? '' : current;
+            document.getElementById('notice-modal').classList.remove('hidden');
+        }
+        function closeNoticeModal() { document.getElementById('notice-modal').classList.add('hidden'); }
+        async function saveNotice() {
+            const text = document.getElementById('notice-text').value.trim();
+            if(text) {
+                await window.fb.set(window.fb.ref(window.fb.db, 'admin/notice'), text);
+                document.getElementById('home-notice').innerText = text;
+            }
+            closeNoticeModal();
+        }
+
+        function renderBatchesList() {
+            const c = document.getElementById('batches-list-container');
+            c.innerHTML = '';
+            if(allBatches.length===0) { c.innerHTML = '<p class="text-center text-gray-500 font-bold text-sm">No batches found.</p>'; return; }
+            
+            allBatches.forEach(b => {
+                const editControls = userRole === 'teacher' ? `
+                    <div class="flex gap-2 relative z-10">
+                        <button onclick="event.stopPropagation(); openBatchEditModal('${b.id}')" class="w-8 h-8 rounded-full bg-blue-600/10 text-blue-600 dark:bg-brand-purple/20 dark:text-purple-300 flex items-center justify-center transition-transform active:scale-90"><i class="ph-bold ph-pencil-simple text-sm"></i></button>
+                        <button onclick="event.stopPropagation(); deleteBatch('${b.id}')" class="w-8 h-8 rounded-full bg-red-500/10 text-red-600 flex items-center justify-center transition-transform active:scale-90"><i class="ph-bold ph-trash text-sm"></i></button>
+                    </div>
+                ` : `<span class="bg-gray-100 dark:bg-white/10 text-xs px-2 py-1 rounded-lg border border-gray-200 dark:border-white/20 text-gray-700 dark:text-white font-bold relative z-10">${b.subject}</span>`;
+                
+                c.innerHTML += `
+                    <div class="glass p-5 flex justify-between items-center shadow-sm cursor-pointer hover:bg-white/50 dark:hover:bg-white/5 transition-colors" onclick="openBatchStudents('${b.title}')">
+                        <div class="relative z-10">
+                            <h3 class="font-bold text-blue-600 dark:text-brand-orange text-lg">${b.title}</h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-1 font-medium"><i class="ph ph-clock mr-1"></i> ${b.time}</p>
+                            ${b.teacherName ? `<p class="text-[10px] text-gray-500 mt-1"><i class="ph-fill ph-chalkboard-teacher"></i> ${b.teacherName}</p>` : ''}
+                        </div>
+                        ${editControls}
+                    </div>`;
+            });
+        }
+
+        function openBatchEditModal(id = null) {
+            document.getElementById('bem-id').value = id || '';
+            document.getElementById('bem-head').innerText = id ? 'Edit Batch' : 'Add Batch';
+            if(id) {
+                const b = allBatches.find(x => x.id === id);
+                document.getElementById('bem-title').value = b.title;
+                document.getElementById('bem-time').value = b.time;
+                document.getElementById('bem-subject').value = b.subject;
+                document.getElementById('bem-teacher-btn').innerText = b.teacherName || 'Select Teacher';
+                document.getElementById('bem-teacher-btn').classList.replace('text-gray-500', 'text-gray-900');
+                document.getElementById('bem-teacher-val').value = b.teacherPhone || '';
+            } else {
+                document.getElementById('bem-title').value = '';
+                document.getElementById('bem-time').value = '';
+                document.getElementById('bem-subject').value = '';
+                document.getElementById('bem-teacher-btn').innerText = 'Select Teacher';
+                document.getElementById('bem-teacher-btn').classList.replace('text-gray-900', 'text-gray-500');
+                document.getElementById('bem-teacher-val').value = '';
+            }
+            document.getElementById('batch-edit-modal').classList.remove('hidden');
+        }
+        function closeBatchEditModal() { document.getElementById('batch-edit-modal').classList.add('hidden'); }
+        
+        async function saveBatch() {
+            const id = document.getElementById('bem-id').value || `b_${Date.now()}`;
+            const data = {
+                title: document.getElementById('bem-title').value,
+                time: document.getElementById('bem-time').value,
+                subject: document.getElementById('bem-subject').value,
+                teacherName: document.getElementById('bem-teacher-btn').innerText !== 'Select Teacher' ? document.getElementById('bem-teacher-btn').innerText : '',
+                teacherPhone: document.getElementById('bem-teacher-val').value
+            };
+            if(!data.title || !data.subject) return;
+            await window.fb.update(window.fb.ref(window.fb.db, `admin/batches/${id}`), data);
+            await fetchBatches();
+            renderBatchesList();
+            closeBatchEditModal();
+        }
+        async function deleteBatch(id) {
+            openConfirmModal("Delete Batch", "Are you sure you want to delete this batch permanently?", async () => {
+                await window.fb.remove(window.fb.ref(window.fb.db, `admin/batches/${id}`));
+                await fetchBatches();
+                renderBatchesList();
+            });
+        }
+
+        async function openBatchStudents(batchTitle) {
+            document.getElementById('tracker-head').innerText = batchTitle;
+            document.getElementById('tracker-sub').innerText = 'Students Enrolled';
+            const list = document.getElementById('tracker-list');
+            list.innerHTML = '<p class="text-center text-sm font-bold text-gray-500 mt-4">Loading students...</p>';
+            
+            document.getElementById('tracker-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('tracker-modal-content').classList.remove('translate-y-full'), 10);
+            
+            const snap = await window.fb.get(window.fb.ref(window.fb.db, 'users'));
+            let found = false;
+            list.innerHTML = '';
+            if(snap.exists()) {
+                const users = snap.val();
+                for(let phone in users) {
+                    if(users[phone].batch === batchTitle) {
+                        found = true;
+                        const u = users[phone];
+                        list.innerHTML += `
+                            <div class="glass p-3 flex justify-between items-center shadow-sm">
+                                <div class="flex items-center gap-3">
+                                    <img src="${u.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.firstName}`}" class="w-10 h-10 rounded-full bg-gray-200 object-cover">
+                                    <div>
+                                        <div class="font-extrabold text-sm text-gray-900 dark:text-white leading-tight">${u.firstName} ${u.lastName || ''}</div>
+                                        <div class="text-[10px] font-bold text-gray-500 uppercase mt-0.5">${u.batch}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            if(!found) list.innerHTML = '<p class="text-center text-sm text-gray-500 font-bold mt-4">No students in this batch.</p>';
+        }
+
+        function openTeacherSignup() { document.getElementById('teacher-signup-modal').classList.remove('hidden'); }
+        function closeTeacherSignup() { document.getElementById('teacher-signup-modal').classList.add('hidden'); }
+        async function submitTeacherSignup() {
+            const ap = document.getElementById('ts-adminpass').value;
+            const p = document.getElementById('ts-phone').value;
+            const fname = document.getElementById('ts-fname').value;
+            if(!ap || !p || !fname) return alert("Fill required fields.");
+            
+            const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/adminPassword'));
+            if(snap.exists() && snap.val() === ap) {
+                const data = {
+                    firstName: fname,
+                    lastName: document.getElementById('ts-lname').value,
+                    password: document.getElementById('ts-pass').value,
+                    profilePic: `https://api.dicebear.com/7.x/avataaars/svg?seed=${fname}`
+                };
+                await window.fb.set(window.fb.ref(window.fb.db, `admin/teachers/${p}`), data);
+                alert("Teacher added successfully!");
+                closeTeacherSignup();
+            } else { alert("Incorrect Admin Password."); }
+        }
+
+        function openAddTaskModal(type) {
+            document.getElementById('atm-type').value = type;
+            document.getElementById('atm-id-key').value = ""; 
+            document.getElementById('atm-title').innerText = type === 'test' ? 'Add Test' : 'Add Homework';
+            document.getElementById('atm-date').value = SYSTEM_TODAY;
+            document.getElementById('atm-grade-btn').innerText = 'Grade (1-12)';
+            document.getElementById('atm-grade-btn').classList.replace('text-gray-900', 'text-gray-500');
+            document.getElementById('atm-subject').value = '';
+            document.getElementById('atm-desc').value = '';
+            document.getElementById('add-task-modal').classList.remove('hidden');
+        }
+        function closeAddTaskModal() { document.getElementById('add-task-modal').classList.add('hidden'); }
+        async function saveTask() {
+            const type = document.getElementById('atm-type').value; 
+            const grade = document.getElementById('atm-grade-btn').innerText;
+            const date = document.getElementById('atm-date').value;
+            const sub = document.getElementById('atm-subject').value;
+            const desc = document.getElementById('atm-desc').value;
+            if(grade === 'Grade (1-12)' || !date || !sub) return alert("Fill required details.");
+            
+            const path = `admin/${type}/${grade}/${date}`;
+            await window.fb.set(window.fb.ref(window.fb.db, path), { subject: sub, description: desc });
+            closeAddTaskModal();
+            if(type === 'test') renderTests(); else renderHomework();
+        }
+
+        async function deleteDataTask(type, grade, date) {
+            openConfirmModal("Delete Card", "Are you sure you want to delete this?", async () => {
+                await window.fb.remove(window.fb.ref(window.fb.db, `admin/${type}/${grade}/${date}`));
+                if(type === 'test') renderTests(); else renderHomework();
+            });
+        }
+
+        function editDataTask(type, grade, date) {
+            const data = window.taskStore[`${type}_${grade}_${date}`];
+            if(!data) return;
+
+            document.getElementById('atm-type').value = type;
+            document.getElementById('atm-title').innerText = type === 'test' ? 'Edit Test' : 'Edit Homework';
+            document.getElementById('atm-date').value = date;
+            document.getElementById('atm-grade-btn').innerText = grade;
+            document.getElementById('atm-grade-btn').classList.replace('text-gray-500', 'text-gray-900');
+            document.getElementById('atm-subject').value = data.subject;
+            document.getElementById('atm-desc').value = data.description;
+            document.getElementById('add-task-modal').classList.remove('hidden');
+        }
+
+        /* ── RENDER DATA LISTS ── */
+        async function renderDataList(type) {
+            const isTest = type === 'test';
+            const idFilter = isTest ? 'test-date-filter' : 'hw-date-filter';
+            const idContainer = isTest ? 'tests-list' : 'homework-list';
+            
+            let filterInput = document.getElementById(idFilter).value;
+            if(!filterInput) { 
+                document.getElementById(idFilter).value = SYSTEM_TODAY; 
+                filterInput = SYSTEM_TODAY; 
+            }
+            
+            const container = document.getElementById(idContainer);
+            container.innerHTML = '<p class="text-gray-500 text-center text-sm font-bold mt-10">Fetching...</p>';
+            if(!window.fb) return;
+            
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, `admin/${type}`));
+                container.innerHTML = '';
+                let found = false;
+                
+                if(snap.exists()) {
+                    const allGrades = snap.val();
+                    for(let grade in allGrades) {
+                        if(userRole === 'student') {
+                            let studentGrade = String(currentUser.grade || "").trim().toLowerCase();
+                            let taskGrade = String(grade).trim().toLowerCase();
+                            if(studentGrade !== taskGrade) continue;
+                        }
+                        if(allGrades[grade][filterInput]) {
+                            found = true;
+                            const data = allGrades[grade][filterInput];
+                            const taskId = `${type}_${grade}_${filterInput}`;
+                            window.taskStore[taskId] = data; 
+
+                            const title = `${isTest?'Test':'Homework'} for Grade ${grade}`;
+                            const displayDate = getDisplayDate(filterInput);
+                            
+                            const editControls = (userRole === 'teacher') ? `
+                                <div class="flex gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-white/10">
+                                    <button onclick="event.stopPropagation(); editDataTask('${type}', '${grade}', '${filterInput}')" class="flex-1 glass-btn py-2 rounded-lg font-bold text-xs text-blue-600 dark:text-brand-orange shadow-sm border-blue-600/20 dark:border-brand-orange/20">Edit</button>
+                                    <button onclick="event.stopPropagation(); deleteDataTask('${type}', '${grade}', '${filterInput}')" class="flex-1 glass-btn py-2 rounded-lg font-bold text-xs text-red-600 bg-red-500/10 border-red-500/20 shadow-sm">Delete</button>
+                                </div>
+                            ` : '';
+
+                            const cardAction = `onclick="openDetailsModalFromStore('${taskId}', '${title}', '${displayDate}')"`;
+
+                            container.innerHTML += `
+                                <div class="glass p-5 cursor-pointer active:scale-95 transition-transform shadow-md hover:bg-white/50 dark:hover:bg-white/5" ${cardAction}>
+                                    <div class="flex justify-between items-start mb-1">
+                                        <span class="font-bold text-blue-600 dark:text-brand-orange text-[10px] uppercase tracking-widest bg-blue-600/10 dark:bg-brand-orange/10 px-2 py-0.5 rounded">${title}</span>
+                                        <span class="text-[10px] font-extrabold text-gray-500 bg-gray-100 dark:bg-white/10 px-2 py-1 rounded shadow-inner">${displayDate}</span>
+                                    </div>
+                                    <h3 class="font-extrabold text-gray-900 dark:text-white mt-2 text-xl">${data.subject || 'No Subject'}</h3>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-2 line-clamp-2 font-medium leading-relaxed">${data.description || 'No Description'}</p>
+                                    ${editControls}
+                                </div>
+                            `;
+                        }
+                    }
+                }
+                if(!found) container.innerHTML = `<p class="text-gray-500 text-center font-bold text-sm mt-10">No tasks scheduled for this date.</p>`;
+            } catch(e) { container.innerHTML = '<p class="text-red-500 text-center font-bold text-sm mt-10">Error fetching data</p>'; }
+        }
+
+        function renderTests() { renderDataList('test'); }
+        function renderHomework() { renderDataList('homework'); }
+
+        function openDetailsModalFromStore(taskId, title, date) {
+            const data = window.taskStore[taskId];
+            if(!data) return;
+            document.getElementById('dm-title').innerText = title; 
+            document.getElementById('dm-date').innerText = date;
+            document.getElementById('dm-subject').innerText = data.subject || 'No Subject'; 
+            document.getElementById('dm-desc').innerText = data.description || 'No Details Provided.';
+            document.getElementById('details-modal').classList.remove('hidden');
+        }
+        function closeDetailsModal() { document.getElementById('details-modal').classList.add('hidden'); }
+
+        /* ── STUDENT DIRECTORY ── */
+        function handleStudentSearch() {
+            const query = document.getElementById('student-search-input').value.toLowerCase();
+            renderStudentsList(query);
+        }
+
+        async function renderStudentsList(filter = "") {
+            const list = document.getElementById('student-list-container');
+            if(!filter) list.innerHTML = '<p class="text-center text-gray-500 py-10 font-medium">Fetching secure records...</p>';
+            if(!window.fb) return;
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'users'));
+                list.innerHTML = '';
+                if(snap.exists()) {
+                    allUsers = snap.val();
+                    let count = 0;
+                    for(let phone in allUsers) {
+                        const u = allUsers[phone];
+                        const name = `${u.firstName} ${u.lastName || ''}`.toLowerCase();
+                        const grade = `grade ${u.grade}`.toLowerCase();
+                        const batch = u.batch.toLowerCase();
+
+                        if(filter && !name.includes(filter) && !grade.includes(filter) && !batch.includes(filter)) continue;
+
+                        count++;
+                        const clickAction = userRole === 'teacher' ? `onclick="handleStudentClick('${phone}')"` : '';
+                        const pointerCls = userRole === 'teacher' ? 'cursor-pointer active:scale-95 transition-transform hover:bg-gray-50 dark:hover:bg-white/5' : 'opacity-90';
+                        list.innerHTML += `
+                            <div class="glass p-4 flex items-center gap-4 ${pointerCls} shadow-sm" ${clickAction}>
+                                <img src="${u.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.firstName}`}" class="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/10 object-cover">
+                                <div class="flex-1 relative z-10">
+                                    <h4 class="font-extrabold text-gray-900 dark:text-white text-sm">${u.firstName} ${u.lastName || ''}</h4>
+                                    <p class="text-xs text-gray-500 font-medium mt-0.5">${u.batch} • Grade ${u.grade}</p>
+                                </div>
+                                ${userRole==='teacher' ? `<div class="relative z-10"><span class="block text-[10px] font-extrabold text-blue-600 dark:text-brand-orange px-2 py-1 bg-blue-600/10 dark:bg-brand-orange/10 rounded">Profile</span></div>` : ''}
+                            </div>
+                        `;
+                    }
+                    if(count === 0) list.innerHTML = '<p class="text-center text-gray-500 font-bold text-sm mt-10">No students match your search.</p>';
+                } else { list.innerHTML = '<p class="text-center text-gray-500 font-bold text-sm">No students found.</p>'; }
+            } catch(e) { list.innerHTML = '<p class="text-center text-red-500 font-bold text-sm">Error fetching data.</p>'; }
+        }
+
+        function handleStudentClick(phone) {
+            if(userRole !== 'teacher') return;
+            selectedStudentPhone = phone;
+            const u = allUsers[phone];
+            document.getElementById('modal-avatar').src = u.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.firstName}`;
+            document.getElementById('modal-title-name').innerText = `${u.firstName} ${u.lastName || ''}`;
+            document.getElementById('modal-fname').value = u.firstName || '';
+            document.getElementById('modal-lname').value = u.lastName || '';
+            document.getElementById('modal-father').value = u.fatherName || '';
+            document.getElementById('modal-loc').value = u.location || '';
+            document.getElementById('modal-grade-btn').innerText = u.grade || 'Grade';
+            document.getElementById('modal-batch-btn').innerText = u.batch || 'Select Batch';
+            
+            document.querySelectorAll('#student-details-form .student-input').forEach(el => el.setAttribute('readonly', true));
+            document.getElementById('modal-batch-btn').disabled = true;
+            document.getElementById('modal-grade-btn').disabled = true;
+            document.getElementById('student-view-btns').classList.remove('hidden');
+            document.getElementById('student-edit-btns').classList.add('hidden');
+
+            document.getElementById('student-modal').classList.remove('hidden');
+        }
+        function enableStudentEdit() {
+            document.querySelectorAll('#student-details-form .student-input').forEach(el => el.removeAttribute('readonly'));
+            document.getElementById('modal-batch-btn').disabled = false;
+            document.getElementById('modal-grade-btn').disabled = false;
+            document.getElementById('student-view-btns').classList.add('hidden');
+            document.getElementById('student-edit-btns').classList.remove('hidden');
+        }
+        function closeStudentModal() { document.getElementById('student-modal').classList.add('hidden'); }
+        
+        async function deleteStudent() {
+            openConfirmModal("Delete Student", "Are you sure you want to remove this record permanently?", async () => {
+                await window.fb.remove(window.fb.ref(window.fb.db, `users/${selectedStudentPhone}`));
+                closeStudentModal(); renderStudentsList();
+            });
+        }
+        async function saveStudent() {
+            const updates = {
+                firstName: document.getElementById('modal-fname').value.trim(),
+                lastName: document.getElementById('modal-lname').value.trim(),
+                fatherName: document.getElementById('modal-father').value,
+                location: document.getElementById('modal-loc').value,
+                grade: document.getElementById('modal-grade-btn').innerText,
+                batch: document.getElementById('modal-batch-btn').innerText
+            };
+            await window.fb.update(window.fb.ref(window.fb.db, `users/${selectedStudentPhone}`), updates);
+            closeStudentModal(); renderStudentsList();
+        }
+
+        /* ── CALENDARS ── */
+        function renderAttendance() {
+            const daysInMonth = new Date(currentAttYear, currentAttMonth + 1, 0).getDate();
+            const firstDay = new Date(currentAttYear, currentAttMonth, 1).getDay();
+            
+            let html = `
+                <div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">S</div><div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">M</div>
+                <div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">T</div><div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">W</div>
+                <div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">T</div><div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">F</div>
+                <div class="text-[10px] text-gray-500 mb-2 tracking-widest uppercase">S</div>`;
+            
+            for(let i=0; i<firstDay; i++) html += `<div></div>`;
+            for(let d=1; d<=daysInMonth; d++) {
+                let isPresent = false;
+                if(userRole === 'student') {
+                    if(currentUser && currentUser.attendance && currentUser.attendance[currentAttYear] && currentUser.attendance[currentAttYear][currentAttMonth]) {
+                        isPresent = currentUser.attendance[currentAttYear][currentAttMonth][d] === true;
+                    }
+                }
+                const cls = (userRole === 'teacher') ? 'bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 cursor-pointer active:scale-90 hover:bg-gray-200 dark:hover:bg-white/10' : (isPresent ? 'bg-green-500/10 border-green-500/30 text-green-600 dark:text-green-400' : 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400');
+                const icon = (userRole === 'teacher') ? '' : (isPresent ? '<i class="ph-bold ph-check"></i>' : '<i class="ph-bold ph-x"></i>');
+                const action = (userRole === 'teacher') ? `onclick="openTeacherTracker('attendance', ${currentAttYear}, ${currentAttMonth}, ${d})"` : '';
+                
+                html += `<div class="w-8 h-8 flex flex-col items-center justify-center rounded-lg mx-auto border ${cls} shadow-sm relative transition-transform" ${action}><span class="text-[9px] absolute ${userRole==='teacher'?'':'top-0.5 opacity-50'} font-bold">${d}</span><span class="mt-2 text-sm">${icon}</span></div>`;
+            }
+            document.getElementById('att-grid').innerHTML = html;
+        }
+
+        function renderFees() {
+            let html = '';
+            monthsArr.forEach((m, idx) => {
+                if(currentFeesYear === 2026 && idx < 2) return; 
+                let isPaid = false;
+                if(userRole === 'student') {
+                    if(currentUser && currentUser.feesStatus && currentUser.feesStatus[currentFeesYear]) {
+                        isPaid = currentUser.feesStatus[currentFeesYear][idx] === true;
+                    }
+                }
+                
+                const cls = (userRole === 'teacher') ? 'bg-gray-50 dark:bg-black/20 cursor-pointer active:scale-95' : (isPaid ? 'bg-green-500/5' : 'bg-red-500/5');
+                const icon = (userRole === 'teacher') ? '<i class="ph-bold ph-caret-right text-gray-400 text-lg"></i>' : (isPaid ? '<i class="ph-bold ph-check text-green-500 text-xl"></i>' : '<i class="ph-bold ph-x text-red-500 text-xl"></i>');
+                const action = (userRole === 'teacher') ? `onclick="openTeacherTracker('fees', ${currentFeesYear}, ${idx}, null)"` : '';
+                
+                html += `
+                    <div class="glass p-4 flex justify-between items-center shadow-sm transition-transform ${cls}" ${action}>
+                        <span class="font-extrabold text-gray-800 dark:text-gray-200 tracking-wide">${m} ${currentFeesYear}</span>
+                        <div class="w-8 h-8 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center bg-white dark:bg-black/50">${icon}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('fees-list').innerHTML = html;
+        }
+
+        /* ── TEACHER TRACKER MODAL ── */
+        async function openTeacherTracker(type, y, m, d) {
+            trackerContext = { type, y, m, d };
+            document.getElementById('tracker-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('tracker-modal-content').classList.remove('translate-y-full'), 10);
+            
+            document.getElementById('tracker-head').innerText = type === 'attendance' ? 'Mark Attendance' : 'Update Fees';
+            document.getElementById('tracker-sub').innerText = type === 'attendance' ? `${d} ${monthsArr[m]} ${y}` : `${monthsArr[m]} ${y}`;
+            
+            const list = document.getElementById('tracker-list');
+            list.innerHTML = '<p class="text-center text-sm font-bold text-gray-500 mt-4">Loading students...</p>';
+            
+            const snap = await window.fb.get(window.fb.ref(window.fb.db, 'users'));
+            if(snap.exists()) {
+                allUsers = snap.val();
+                list.innerHTML = '';
+                for(let phone in allUsers) {
+                    const u = allUsers[phone];
+                    if(type === 'attendance' && currentAttBatch !== 'All Batches' && u.batch !== currentAttBatch) continue;
+
+                    let state = false;
+                    if(type === 'attendance') {
+                        state = u.attendance && u.attendance[y] && u.attendance[y][m] && u.attendance[y][m][d] === true;
+                    } else {
+                        state = u.feesStatus && u.feesStatus[y] && u.feesStatus[y][m] === true;
+                    }
+                    
+                    const btnCls = state ? 'bg-green-500 border-green-500 shadow-green-500/30' : 'bg-red-600 border-red-600 shadow-red-600/30';
+                    const btnText = state ? (type==='attendance'?'Present':'Paid') : (type==='attendance'?'Absent':'Due');
+                    
+                    list.innerHTML += `
+                        <div class="glass p-3 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <img src="${u.profilePic || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.firstName}`}" class="w-10 h-10 rounded-full bg-gray-200 object-cover">
+                                <div>
+                                    <div class="font-extrabold text-sm text-gray-900 dark:text-white leading-tight">${u.firstName} ${u.lastName || ''}</div>
+                                    <div class="text-[10px] font-bold text-gray-500 uppercase mt-0.5">${u.batch}</div>
+                                </div>
+                            </div>
+                            <button onclick="toggleRecordState('${phone}', ${state})" class="px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow border transition-colors ${btnCls}">${btnText}</button>
+                        </div>
+                    `;
+                }
+                if(list.innerHTML === '') list.innerHTML = '<p class="text-center text-sm text-gray-500 font-bold">No students match filter.</p>';
+            } else list.innerHTML = '<p class="text-center text-sm text-gray-500 font-bold">No students found.</p>';
+        }
+        function closeTrackerModal() {
+            document.getElementById('tracker-modal-content').classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('tracker-modal').classList.add('hidden'), 400);
+        }
+        async function toggleRecordState(phone, currentState) {
+            const newState = !currentState;
+            const { type, y, m, d } = trackerContext;
+            const path = type === 'attendance' ? `users/${phone}/attendance/${y}/${m}/${d}` : `users/${phone}/feesStatus/${y}/${m}`;
+            await window.fb.set(window.fb.ref(window.fb.db, path), newState);
+            openTeacherTracker(type, y, m, d); 
+        }
+
+        /* ── CHATBOT AI LOGIC ── */
+        document.getElementById('chat-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if(!msg) return;
+            const chatBox = document.getElementById('chat-messages');
+
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div class="flex items-start gap-2 justify-end">
+                    <div class="glass p-3 rounded-tr-none text-sm text-gray-900 dark:text-white bg-blue-600/10 dark:bg-brand-purple/20 border-blue-600/20 dark:border-brand-purple/30 font-medium">
+                        <span class="relative z-10">${msg}</span>
+                    </div>
+                </div>
+            `);
+            input.value = '';
+            chatBox.scrollTo({top: chatBox.scrollHeight, behavior: 'smooth'});
+
+            const typingId = 'typing-' + Date.now();
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div id="${typingId}" class="flex items-start gap-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600/10 dark:bg-brand-purple/20 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="ph-fill ph-robot text-blue-600 dark:text-purple-300 animate-pulse"></i>
+                    </div>
+                    <div class="glass p-3 rounded-tl-none text-sm text-gray-800 dark:text-gray-200 font-medium italic opacity-70">Thinking...</div>
+                </div>
+            `);
+            chatBox.scrollTo({top: chatBox.scrollHeight, behavior: 'smooth'});
+
+            let aiResponse = "I couldn't process that.";
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/ChatBot'));
+                if(snap.exists() && snap.val().ApiKey) {
+                    const key = snap.val().ApiKey;
+                    const model = snap.val().Model || "gemini-1.5-flash";
+                    const role = snap.val().role || "You are Catalyzer AI.";
+
+                    if (key.startsWith("sk-or")) {
+                        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + key,
+                                "HTTP-Referer": window.location.href,
+                                "X-Title": "Catalyzers Academy"
+                            },
+                            body: JSON.stringify({
+                                model: model,
+                                messages: [{ role: "system", content: role }, { role: "user", content: msg }]
+                            })
+                        });
+                        const data = await res.json();
+                        if(data.choices && data.choices[0] && data.choices[0].message) {
+                            aiResponse = data.choices[0].message.content;
+                        }
+                    } else if (model.includes("gpt")) {
+                        const res = await fetch("https://api.openai.com/v1/chat/completions", {
+                            method: "POST", headers: {"Content-Type": "application/json", "Authorization": "Bearer "+key},
+                            body: JSON.stringify({model: model, messages: [{role:"system", content:role}, {role:"user", content:msg}]})
+                        });
+                        const data = await res.json();
+                        aiResponse = data.choices[0].message.content;
+                    } else {
+                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+                            method: "POST", headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                                contents:[{parts: [{text: msg}]}],
+                                system_instruction: { parts: [{ text: role }] }
+                            })
+                        });
+                        const data = await res.json();
+                        if(data.candidates && data.candidates[0] && data.candidates[0].content) {
+                            aiResponse = data.candidates[0].content.parts[0].text;
+                        }
+                    }
+                } else { aiResponse = "AI is not configured yet."; }
+            } catch(e) { aiResponse = "Oops! Problem connecting with AI."; }
+
+            if(document.getElementById(typingId)) document.getElementById(typingId).remove();
+            aiResponse = aiResponse.toString().replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div class="flex items-start gap-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600/10 dark:bg-brand-purple/20 flex-shrink-0 flex items-center justify-center mt-1">
+                        <i class="ph-fill ph-robot text-blue-600 dark:text-purple-300"></i>
+                    </div>
+                    <div class="glass p-3 rounded-tl-none text-sm text-gray-800 dark:text-gray-200 font-medium"><span class="relative z-10">${aiResponse}</span></div>
+                </div>
+            `);
+            chatBox.scrollTo({top: chatBox.scrollHeight, behavior: 'smooth'});
+        });
+
+        /* ── MODALS & PROFILE ── */
+        async function openAdminTeacherList() {
+            const modal = document.getElementById('admin-teacher-modal');
+            const content = document.getElementById('admin-teacher-content');
+            const list = document.getElementById('admin-teacher-scroll-list');
+            modal.classList.remove('hidden');
+            setTimeout(() => content.classList.remove('translate-y-full'), 10);
+            list.innerHTML = '<p class="text-center py-10 font-bold">Fetching Teachers...</p>';
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/teachers'));
+                list.innerHTML = '';
+                if(snap.exists()) {
+                    const data = snap.val();
+                    for(let ph in data) {
+                        const t = data[ph];
+                        list.innerHTML += `
+                            <div class="glass p-4 flex justify-between items-center shadow-md">
+                                <div class="flex items-center gap-4">
+                                    <img src="${t.profilePic}" class="w-12 h-12 rounded-full border border-white/20">
+                                    <div><div class="font-black text-gray-900 dark:text-white">${t.firstName}</div><div class="text-xs font-bold text-gray-500">${ph}</div></div>
+                                </div>
+                                <button onclick="deleteTeacherRecord('${ph}')" class="w-10 h-10 rounded-full bg-red-500/10 text-red-600 flex items-center justify-center transition-all"><i class="ph-bold ph-trash text-lg"></i></button>
+                            </div>`;
+                    }
+                }
+            } catch(e) {}
+        }
+        function closeAdminTeacherList() {
+            document.getElementById('admin-teacher-content').classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('admin-teacher-modal').classList.add('hidden'), 500);
+        }
+        function deleteTeacherRecord(ph) {
+            openConfirmModal("Delete Teacher", "Delete this teacher record?", async () => {
+                await window.fb.remove(window.fb.ref(window.fb.db, `admin/teachers/${ph}`));
+                openAdminTeacherList();
+            });
+        }
+        async function openShareModal() {
+            document.getElementById('share-link-input').value = 'Fetching...';
+            document.getElementById('share-modal').classList.remove('hidden');
+            try {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/appLink'));
+                document.getElementById('share-link-input').value = snap.exists() ? snap.val() : 'No link';
+            } catch(e) { document.getElementById('share-link-input').value = 'Error'; }
+        }
+        function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
+        function copyShareLink() {
+            navigator.clipboard.writeText(document.getElementById('share-link-input').value);
+            alert('Link copied!');
+        }
+        function confirmLogout() { document.getElementById('logout-modal').classList.remove('hidden'); }
+        function closeLogoutModal() { document.getElementById('logout-modal').classList.add('hidden'); }
+        function executeLogout() {
+            closeLogoutModal(); localStorage.removeItem('tusion-user');
+            window.location.reload();
+        }
+        function openNameChangeModal() {
+            document.getElementById('nm-first').value = currentUser.firstName;
+            document.getElementById('nm-last').value = currentUser.lastName || '';
+            document.getElementById('name-modal').classList.remove('hidden');
+        }
+        function closeNameChangeModal() { document.getElementById('name-modal').classList.add('hidden'); }
+        async function saveNameChange() {
+            const fn = document.getElementById('nm-first').value.trim();
+            const ln = document.getElementById('nm-last').value.trim();
+            if(!fn) return;
+            const path = userRole === 'student' ? `users/${currentUser.phone}` : `admin/teachers/${currentUser.phone}`;
+            await window.fb.update(window.fb.ref(window.fb.db, path), { firstName: fn, lastName: ln });
+            window.location.reload();
+        }
+        function openAvatarModal(forSignup = false) {
+            isSignupAvatar = forSignup;
+            const grid = document.getElementById('avatar-grid'); grid.innerHTML = '';
+            avatarSeeds.forEach(seed => {
+                const url = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+                grid.innerHTML += `<img src="${url}" class="w-16 h-16 rounded-full bg-gray-100 dark:bg-white/10 cursor-pointer hover:scale-110 active:scale-90" onclick="selectAvatar('${url}')">`;
+            });
+            document.getElementById('avatar-modal').classList.remove('hidden');
+        }
+        function selectAvatar(url) {
+            if(isSignupAvatar) { selectedSignupAvatar = url; document.getElementById('su-avatar-preview').src = url; } 
+            else {
+                const path = userRole === 'student' ? `users/${currentUser.phone}` : `admin/teachers/${currentUser.phone}`;
+                window.fb.update(window.fb.ref(window.fb.db, path), { profilePic: url });
+                document.getElementById('profile-avatar-img').src = url;
+            }
+            closeAvatarModal();
+        }
+        function closeAvatarModal() { document.getElementById('avatar-modal').classList.add('hidden'); }
+        async function openTeacherList() {
+            document.getElementById('teacher-list-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('teacher-list-content-wrapper').classList.remove('translate-y-full'), 10);
+            const list = document.getElementById('teacher-list-content');
+            list.innerHTML = '<p class="text-center text-sm font-bold text-gray-500">Fetching Staff...</p>';
+            if(window.fb) {
+                const snap = await window.fb.get(window.fb.ref(window.fb.db, 'admin/teachers'));
+                list.innerHTML = '';
+                if(snap.exists()) {
+                    const data = snap.val();
+                    for(let ph in data) {
+                        const t = data[ph];
+                        list.innerHTML += `<div class="glass p-4 flex justify-between items-center"><div class="flex items-center gap-3"><img src="${t.profilePic}" class="w-12 h-12 rounded-full"><div><div class="font-extrabold text-gray-900 dark:text-white">${t.firstName}</div><div class="text-[10px] uppercase font-bold text-blue-600">Staff</div></div></div><a href="tel:${ph}" class="w-10 h-10 rounded-full bg-blue-600/10 flex items-center justify-center text-blue-600"><i class="ph-fill ph-phone text-xl"></i></a></div>`;
+                    }
+                }
+            }
+        }
+        function closeTeacherList() {
+            document.getElementById('teacher-list-content-wrapper').classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('teacher-list-modal').classList.add('hidden'), 400);
+        }
+        function getDisplayDate(iso) {
+            const d = new Date(iso);
+            return `${d.getDate()} • ${d.toLocaleString('default', { month: 'short' })} • ${d.getFullYear()}`;
+        }
+    </script>
+</body>
+</html>
+ 
